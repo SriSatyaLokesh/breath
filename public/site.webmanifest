@@ -1,0 +1,17 @@
+{
+  "name": "Swaasa Midha Dhyasa — Audio-Visual Mindfulness Sanctuary",
+  "short_name": "Swaasa",
+  "description": "Free open-source audio-visual mindfulness web app featuring science-backed breathing techniques, Indian Carnatic classical music, YouTube Music streaming, and customizable timers.",
+  "start_url": "./index.html",
+  "display": "standalone",
+  "background_color": "#0e0904",
+  "theme_color": "#e86026",
+  "icons": [
+    {
+      "src": "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512'%3E%3Crect width='512' height='512' fill='%230e0904'/%3E%3Ccircle cx='256' cy='256' r='180' fill='none' stroke='%23e86026' stroke-width='24'/%3E%3Ccircle cx='256' cy='256' r='110' fill='%23e86026' opacity='0.7'/%3E%3C/svg%3E",
+      "sizes": "512x512",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ]
+}

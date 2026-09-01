@@ -3,12 +3,164 @@
 <head>
 	<meta charset="UTF-8" />
 	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-	<title>Swaasa Midha Dhyasa — Audio-Visual Mindfulness</title>
+	
+	<!-- SEO Primary Meta Tags -->
+	<title>Swaasa Midha Dhyasa — Free Audio-Visual Meditation & Breathing Web App</title>
+	<meta name="title" content="Swaasa Midha Dhyasa — Free Audio-Visual Meditation & Breathing Web App" />
+	<meta name="description" content="Swaasa Midha Dhyasa (Focus on the Breath) is a free open-source mindfulness web application. Featuring Box Breathing, 4-7-8 Sleep Breath, Physiological Sigh for anxiety, Indian Carnatic Raga Meditation, YouTube Music streaming, and customizable timers." />
+	<meta name="keywords" content="Swaasa Midha Dhyasa, breathing app, online meditation timer, box breathing web app, 4-7-8 breathing, physiological sigh, anxiety relief app, Indian Carnatic classical raga meditation, Tanpura drone soundscape, YouTube Music meditation, free mindfulness app, Web Audio API, PWA breathing app" />
+	<meta name="author" content="Swaasa Midha Dhyasa Contributors" />
+	<meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />
+	<link rel="canonical" href="https://srisatyalokesh.github.io/breath/" />
+
+	<!-- PWA & Mobile Icons -->
+	<link rel="manifest" href="/site.webmanifest" />
+	<meta name="theme-color" content="#0e0904" />
+	<meta name="apple-mobile-web-app-capable" content="yes" />
+	<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+
+	<!-- Open Graph / Facebook / LinkedIn Meta Tags -->
+	<meta property="og:type" content="website" />
+	<meta property="og:url" content="https://srisatyalokesh.github.io/breath/" />
+	<meta property="og:title" content="Swaasa Midha Dhyasa — Audio-Visual Mindfulness & Breathing App" />
+	<meta property="og:description" content="Experience science-backed breathing techniques, Indian Carnatic classical Ragas, YouTube Music streaming, and custom timers in an open-source digital sanctuary." />
+	<meta property="og:site_name" content="Swaasa Midha Dhyasa" />
+	<meta property="og:locale" content="en_US" />
+
+	<!-- Twitter Card Meta Tags -->
+	<meta name="twitter:card" content="summary_large_image" />
+	<meta name="twitter:url" content="https://srisatyalokesh.github.io/breath/" />
+	<meta name="twitter:title" content="Swaasa Midha Dhyasa — Audio-Visual Mindfulness & Breathing App" />
+	<meta name="twitter:description" content="Science-backed breathing techniques, Indian Carnatic Classical Ragas, YouTube Music streaming, and custom session timers." />
+
 	<!-- Haute Luxury Editorial & Sacred Typography -->
 	<link rel="preconnect" href="https://fonts.googleapis.com">
 	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 	<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700&family=Cormorant+Garamond:ital,wght@0,300;1,300&family=DM+Mono:wght@300;400&family=Instrument+Serif:ital@0;1&family=Tenor+Sans&display=swap" rel="stylesheet">
 	<link rel="stylesheet" href="/src/styles/main.css" />
+
+	<!-- JSON-LD Structured Data: WebApplication Schema (GEO / SEO) -->
+	<script type="application/ld+json">
+	{
+		"@context": "https://schema.org",
+		"@type": "WebApplication",
+		"name": "Swaasa Midha Dhyasa",
+		"url": "https://srisatyalokesh.github.io/breath/",
+		"description": "Free open-source web application for audio-visual mindfulness, science-backed breathing techniques, Indian Carnatic classical raga soundscapes, YouTube Music integration, and customizable session timers.",
+		"applicationCategory": "HealthApplication",
+		"operatingSystem": "All",
+		"browserRequirements": "Requires Web Audio API and WebGL / Canvas 2D support",
+		"offers": {
+			"@type": "Offer",
+			"price": "0.00",
+			"priceCurrency": "USD"
+		},
+		"author": {
+			"@type": "Organization",
+			"name": "Swaasa Midha Dhyasa Open Source Community"
+		},
+		"featureList": [
+			"Box Breathing (Navy SEAL 4-4-4-4 equalized focus pattern)",
+			"4-7-8 Relaxing Sleep Breath Pattern",
+			"Physiological Sigh (Stanford double-inhale anxiety relief pattern)",
+			"HRV Coherence Breath (5.5s inhale / 5.5s exhale)",
+			"Indian Carnatic Classical Raga Meditation (Tanpura Drone & Raga Mohanam / Hamsadhvani)",
+			"YouTube Music & Video Stream Integration",
+			"Natural Pulmonary Airflow Breathing Guidance",
+			"Customizable Session Duration Timers"
+		]
+	}
+	</script>
+
+	<!-- JSON-LD Structured Data: FAQPage Schema (AEO / Voice Search) -->
+	<script type="application/ld+json">
+	{
+		"@context": "https://schema.org",
+		"@type": "FAQPage",
+		"mainEntity": [
+			{
+				"@type": "Question",
+				"name": "What is Swaasa Midha Dhyasa?",
+				"acceptedAnswer": {
+					"@type": "Answer",
+					"text": "Swaasa Midha Dhyasa (Telugu/Sanskrit for 'Mindfulness and Focus on the Breath') is a free, open-source audio-visual web application designed for guided breathing exercises, deep meditation, anxiety relief, and inner calm."
+				}
+			},
+			{
+				"@type": "Question",
+				"name": "How does Box Breathing work and what are its benefits?",
+				"acceptedAnswer": {
+					"@type": "Answer",
+					"text": "Box Breathing (4-4-4-4 pattern: 4s Inhale, 4s Hold, 4s Exhale, 4s Hold) is an equalized breathing technique used by Navy SEALs and athletes to quickly lower stress, regulate the autonomic nervous system, and restore mental focus."
+				}
+			},
+			{
+				"@type": "Question",
+				"name": "What is the Physiological Sigh for anxiety relief?",
+				"acceptedAnswer": {
+					"@type": "Answer",
+					"text": "The Physiological Sigh is a Stanford Neurobiology breathing pattern consisting of two quick inhales followed by one long, slow exhale (2s double-inhale, 1s hold, 4s exhale). It rapidly offloads carbon dioxide (CO2) from the lungs and triggers parasympathetic calm within seconds."
+				}
+			},
+			{
+				"@type": "Question",
+				"name": "How does 4-7-8 breathing help with sleep and meditation?",
+				"acceptedAnswer": {
+					"@type": "Answer",
+					"text": "The 4-7-8 breathing technique (4s Inhale, 7s Hold, 8s Exhale) acts as a natural tranquilizer for the nervous system by extending the exhale, slowing the heart rate, and shifting the brain into relaxing theta frequencies."
+				}
+			},
+			{
+				"@type": "Question",
+				"name": "What is Indian Carnatic Classical Raga Meditation in Swaasa Midha Dhyasa?",
+				"acceptedAnswer": {
+					"@type": "Answer",
+					"text": "In Swaasa Midha Dhyasa's Classical Space, real-time procedural Web Audio synthesizes sacred Tanpura Shruti Box drones (Sa-Pa-Sa') along with Carnatic Raga Swara melodies (Raga Mohanam, Hamsadhvani, and Kalyani) featuring microtonal Gamaka pitch slides."
+				}
+			},
+			{
+				"@type": "Question",
+				"name": "Can I stream YouTube Music during my breathing session?",
+				"acceptedAnswer": {
+					"@type": "Answer",
+					"text": "Yes! In the Audio & Timer modal, select 'YouTube Music Stream', paste any YouTube Music or YouTube video URL, and play your favorite ambient or classical tracks in the background while breathing."
+				}
+			}
+		]
+	}
+	</script>
+
+	<!-- JSON-LD Structured Data: HowTo Schema (Search Snippets) -->
+	<script type="application/ld+json">
+	{
+		"@context": "https://schema.org",
+		"@type": "HowTo",
+		"name": "How to Perform Box Breathing for Stress & Focus",
+		"description": "Step-by-step guide to practicing 4-4-4-4 Box Breathing on Swaasa Midha Dhyasa.",
+		"step": [
+			{
+				"@type": "HowToStep",
+				"name": "Step 1: Inhale Slowly",
+				"text": "Inhale deeply through your nose for 4 seconds as the light expands."
+			},
+			{
+				"@type": "HowToStep",
+				"name": "Step 2: Hold Breath",
+				"text": "Hold your breath gently for 4 seconds in stillness."
+			},
+			{
+				"@type": "HowToStep",
+				"name": "Step 3: Exhale Fully",
+				"text": "Release your breath smoothly through your mouth for 4 seconds."
+			},
+			{
+				"@type": "HowToStep",
+				"name": "Step 4: Hold Out",
+				"text": "Pause empty for 4 seconds before beginning the next cycle."
+			}
+		]
+	}
+	</script>
 </head>
 <body>
 	<canvas id="c-bg"></canvas>
@@ -27,25 +179,27 @@
 	</div>
 
 	<!-- Navigation Bar -->
-	<div id="mode-switcher">
-		<div id="mode-track">
-			<div id="mode-thumb"></div>
-			<button class="mode-pill" data-mode="breathe">Breathe</button>
-			<button class="mode-pill" data-mode="meditate">Meditate</button>
-			<button class="mode-pill" data-mode="anxiety">Anxiety</button>
-			<button class="mode-pill" data-mode="nature">Nature</button>
-			<button class="mode-pill" data-mode="classical">Classical</button>
-			<button class="mode-pill" data-mode="jazz">Jazz</button>
-		</div>
-	</div>
+	<header>
+		<nav id="mode-switcher" aria-label="Sanctuary Spaces Navigation">
+			<div id="mode-track">
+				<div id="mode-thumb"></div>
+				<button class="mode-pill" data-mode="breathe" aria-label="Switch to Breathe Space">Breathe</button>
+				<button class="mode-pill" data-mode="meditate" aria-label="Switch to Meditate Space">Meditate</button>
+				<button class="mode-pill" data-mode="anxiety" aria-label="Switch to Anxiety Space">Anxiety</button>
+				<button class="mode-pill" data-mode="nature" aria-label="Switch to Nature Space">Nature</button>
+				<button class="mode-pill" data-mode="classical" aria-label="Switch to Classical Space">Classical</button>
+				<button class="mode-pill" data-mode="jazz" aria-label="Switch to Jazz Space">Jazz</button>
+			</div>
+		</nav>
+	</header>
 
 	<!-- Main UI Interface -->
-	<div id="ui">
-		<div id="hero">
-			<div id="h1-text"></div>
+	<main id="ui" role="main">
+		<section id="hero" aria-live="polite">
+			<h1 id="h1-text"></h1>
 			<span class="tagline" id="tagline-text"></span>
-		</div>
-		<p id="cue"></p>
+		</section>
+		<p id="cue" aria-live="assertive"></p>
 		<div id="btn-wrap">
 			<button id="breath-btn" aria-label="Toggle Breathing Session">
 				<div id="ir1"></div>
@@ -54,46 +208,72 @@
 				<span id="btn-label">Begin</span>
 			</button>
 		</div>
-	</div>
+	</main>
 
 	<!-- Floating Tool Controls -->
-	<div id="tool-bar">
-		<button id="btn-breath-modal" class="tool-btn" title="Breath Methods & Custom Builder">
-			<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+	<aside id="tool-bar" aria-label="Mindfulness Controls">
+		<button id="btn-breath-modal" class="tool-btn" title="Breath Methods & Custom Builder" aria-label="Open Breath Methods Modal">
+			<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
 				<circle cx="12" cy="12" r="10"></circle>
 				<path d="M12 6v12M6 12h12"></path>
 			</svg>
 			<span>Breath Pattern</span>
 		</button>
 
-		<button id="btn-music-modal" class="tool-btn" title="Curated Soundscapes, YouTube Music & Timer">
-			<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+		<button id="btn-music-modal" class="tool-btn" title="Curated Soundscapes, YouTube Music & Timer" aria-label="Open Soundscape & Timer Modal">
+			<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
 				<path d="M9 18V5l12-2v13"></path>
 				<circle cx="6" cy="18" r="3"></circle>
 				<circle cx="18" cy="16" r="3"></circle>
 			</svg>
 			<span>Audio & Timer</span>
 		</button>
-	</div>
+	</aside>
 
 	<!-- Affirmation Overlay -->
-	<div id="affirmation">
+	<aside id="affirmation" aria-live="polite">
 		<p id="affirmation-text"></p>
-	</div>
+	</aside>
 
 	<!-- Session Metadata & Bar Counter -->
-	<div id="bar-counter"></div>
-	<div id="session-label">
-		<div class="sl-p" id="sl-pattern">Box Breathing</div>
-		<div class="sl-d" id="sl-detail">4 · 4 · 4 · 4</div>
-	</div>
-	<div id="track-name"></div>
+	<footer id="session-footer">
+		<div id="bar-counter"></div>
+		<div id="session-label">
+			<div class="sl-p" id="sl-pattern">Box Breathing</div>
+			<div class="sl-d" id="sl-detail">4 · 4 · 4 · 4</div>
+		</div>
+		<div id="track-name"></div>
+	</footer>
+
+	<!-- SEO / GEO / AEO Hidden Knowledge Section for Search Engines & Generative AI Agents -->
+	<section id="seo-knowledge-base" class="hidden-seo-content" style="display:none;" aria-hidden="true">
+		<h2>About Swaasa Midha Dhyasa — Audio-Visual Mindfulness Application</h2>
+		<p>Swaasa Midha Dhyasa is a web-based mindfulness sanctuary offering science-backed breathing techniques, Web Audio ambient soundscapes, Indian Carnatic classical music, YouTube Music streaming, and session duration timers.</p>
+		
+		<h3>Science-Backed Breathing Techniques</h3>
+		<article>
+			<h4>Box Breathing (4-4-4-4)</h4>
+			<p>Equalized breathing rhythm utilized by tactical units and high-performance individuals to reset the nervous system, balance oxygen levels, and heighten mental clarity.</p>
+		</article>
+		<article>
+			<h4>4-7-8 Breathing Technique</h4>
+			<p>A natural relaxation exercise that extends exhalation to activate parasympathetic dominance, lower heart rate, and assist in falling asleep.</p>
+		</article>
+		<article>
+			<h4>Physiological Sigh (2-1-4 Double Inhale)</h4>
+			<p>Stanford neurobiology breathing protocol designed to immediately collapse alveoli strain, rapidly clear carbon dioxide, and neutralize acute anxiety.</p>
+		</article>
+		<article>
+			<h4>Indian Carnatic Classical Raga Soundscapes</h4>
+			<p>Procedural Web Audio synthesis of sacred Tanpura Shruti Box drones (Sa-Pa-Sa') combined with Carnatic Ragas (Mohanam, Hamsadhvani, Kalyani) and expressive microtonal Gamaka pitch slides on Veena and Bamboo Flute.</p>
+		</article>
+	</section>
 
 	<!-- MODAL: Custom Breath Patterns -->
-	<div id="breath-modal" class="modal-backdrop" aria-hidden="true">
+	<div id="breath-modal" class="modal-backdrop" aria-hidden="true" role="dialog" aria-labelledby="breath-modal-title">
 		<div class="modal-card">
-			<button class="modal-close" id="breath-modal-close" aria-label="Close">&times;</button>
-			<h2 class="modal-title">Breathing Methods</h2>
+			<button class="modal-close" id="breath-modal-close" aria-label="Close Modal">&times;</button>
+			<h2 class="modal-title" id="breath-modal-title">Breathing Methods</h2>
 			<p class="modal-subtitle">Select a science-backed technique or craft your custom rhythm.</p>
 
 			<div id="pattern-list" class="pattern-grid"></div>
@@ -139,10 +319,10 @@
 	</div>
 
 	<!-- MODAL: Soundscape, YouTube Music & Timer Manager -->
-	<div id="music-modal" class="modal-backdrop" aria-hidden="true">
+	<div id="music-modal" class="modal-backdrop" aria-hidden="true" role="dialog" aria-labelledby="music-modal-title">
 		<div class="modal-card">
-			<button class="modal-close" id="music-modal-close" aria-label="Close">&times;</button>
-			<h2 class="modal-title">Audio & Session Timer</h2>
+			<button class="modal-close" id="music-modal-close" aria-label="Close Modal">&times;</button>
+			<h2 class="modal-title" id="music-modal-title">Audio & Session Timer</h2>
 			<p class="modal-subtitle">Customize procedural synthesis, YouTube Music streams, and session durations.</p>
 
 			<div class="audio-controls-group">
