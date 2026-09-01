@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+	<title>Swaasa Midha Dhyasa — Audio-Visual Mindfulness</title>
+	<!-- Haute Luxury Editorial & Sacred Typography -->
+	<link rel="preconnect" href="https://fonts.googleapis.com">
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700&family=Cormorant+Garamond:ital,wght@0,300;1,300&family=DM+Mono:wght@300;400&family=Instrument+Serif:ital@0;1&family=Tenor+Sans&display=swap" rel="stylesheet">
+	<link rel="stylesheet" href="/src/styles/main.css" />
+</head>
+<body>
+	<canvas id="c-bg"></canvas>
+	<canvas id="c-fx"></canvas>
+	<canvas id="c-top"></canvas>
+	
+	<div id="grain"></div>
+	<div id="vig"></div>
+	<div id="dot"></div>
+	<div id="ring"></div>
+	<div id="mode-flash"></div>
+
+	<!-- Hidden YouTube IFrame Player -->
+	<div id="yt-player-container" style="position:fixed; width:1px; height:1px; opacity:0; pointer-events:none; z-index:-1;">
+		<div id="yt-player-element"></div>
+	</div>
+
+	<!-- Navigation Bar -->
+	<div id="mode-switcher">
+		<div id="mode-track">
+			<div id="mode-thumb"></div>
+			<button class="mode-pill" data-mode="breathe">Breathe</button>
+			<button class="mode-pill" data-mode="meditate">Meditate</button>
+			<button class="mode-pill" data-mode="anxiety">Anxiety</button>
+			<button class="mode-pill" data-mode="nature">Nature</button>
+			<button class="mode-pill" data-mode="classical">Classical</button>
+			<button class="mode-pill" data-mode="jazz">Jazz</button>
+		</div>
+	</div>
+
+	<!-- Main UI Interface -->
+	<div id="ui">
+		<div id="hero">
+			<div id="h1-text"></div>
+			<span class="tagline" id="tagline-text"></span>
+		</div>
+		<p id="cue"></p>
+		<div id="btn-wrap">
+			<button id="breath-btn" aria-label="Toggle Breathing Session">
+				<div id="ir1"></div>
+				<div id="ir2"></div>
+				<div id="btn-fill"></div>
+				<span id="btn-label">Begin</span>
+			</button>
+		</div>
+	</div>
+
+	<!-- Floating Tool Controls -->
+	<div id="tool-bar">
+		<button id="btn-breath-modal" class="tool-btn" title="Breath Methods & Custom Builder">
+			<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+				<circle cx="12" cy="12" r="10"></circle>
+				<path d="M12 6v12M6 12h12"></path>
+			</svg>
+			<span>Breath Pattern</span>
+		</button>
+
+		<button id="btn-music-modal" class="tool-btn" title="Curated Soundscapes, YouTube Music & Timer">
+			<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+				<path d="M9 18V5l12-2v13"></path>
+				<circle cx="6" cy="18" r="3"></circle>
+				<circle cx="18" cy="16" r="3"></circle>
+			</svg>
+			<span>Audio & Timer</span>
+		</button>
+	</div>
+
+	<!-- Affirmation Overlay -->
+	<div id="affirmation">
+		<p id="affirmation-text"></p>
+	</div>
+
+	<!-- Session Metadata & Bar Counter -->
+	<div id="bar-counter"></div>
+	<div id="session-label">
+		<div class="sl-p" id="sl-pattern">Box Breathing</div>
+		<div class="sl-d" id="sl-detail">4 · 4 · 4 · 4</div>
+	</div>
+	<div id="track-name"></div>
+
+	<!-- MODAL: Custom Breath Patterns -->
+	<div id="breath-modal" class="modal-backdrop" aria-hidden="true">
+		<div class="modal-card">
+			<button class="modal-close" id="breath-modal-close" aria-label="Close">&times;</button>
+			<h2 class="modal-title">Breathing Methods</h2>
+			<p class="modal-subtitle">Select a science-backed technique or craft your custom rhythm.</p>
+
+			<div id="pattern-list" class="pattern-grid"></div>
+
+			<hr class="modal-divider" />
+
+			<h3 class="builder-heading">Custom Breath Builder</h3>
+			<form id="custom-breath-form">
+				<div class="form-group">
+					<label for="custom-name">Pattern Name</label>
+					<input type="text" id="custom-name" placeholder="e.g. Deeper Calm" required maxlength="28" />
+				</div>
+				<div class="timing-grid">
+					<div class="form-group">
+						<label for="custom-inhale">Inhale (sec)</label>
+						<input type="number" id="custom-inhale" min="1" max="20" step="0.5" value="4" required />
+					</div>
+					<div class="form-group">
+						<label for="custom-hold-in">Hold (sec)</label>
+						<input type="number" id="custom-hold-in" min="0" max="20" step="0.5" value="4" required />
+					</div>
+					<div class="form-group">
+						<label for="custom-exhale">Exhale (sec)</label>
+						<input type="number" id="custom-exhale" min="1" max="20" step="0.5" value="4" required />
+					</div>
+					<div class="form-group">
+						<label for="custom-hold-out">Hold (sec)</label>
+						<input type="number" id="custom-hold-out" min="0" max="20" step="0.5" value="4" required />
+					</div>
+				</div>
+				<div class="form-group checkbox-group">
+					<label class="toggle-switch">
+						<input type="checkbox" id="custom-double-inhale" />
+						<span class="slider"></span>
+					</label>
+					<span class="toggle-label">Enable Double-Inhale (Physiological Sigh)</span>
+				</div>
+				<div class="modal-actions">
+					<button type="submit" class="primary-btn">Save & Apply Pattern</button>
+				</div>
+			</form>
+		</div>
+	</div>
+
+	<!-- MODAL: Soundscape, YouTube Music & Timer Manager -->
+	<div id="music-modal" class="modal-backdrop" aria-hidden="true">
+		<div class="modal-card">
+			<button class="modal-close" id="music-modal-close" aria-label="Close">&times;</button>
+			<h2 class="modal-title">Audio & Session Timer</h2>
+			<p class="modal-subtitle">Customize procedural synthesis, YouTube Music streams, and session durations.</p>
+
+			<div class="audio-controls-group">
+				<div class="control-row">
+					<label for="master-volume">Master Volume</label>
+					<input type="range" id="master-volume" min="0" max="1" step="0.01" value="0.7" />
+					<span id="volume-val">70%</span>
+				</div>
+
+				<hr class="modal-divider" />
+
+				<h3 class="builder-heading">Soundscape & Music Source</h3>
+				<div class="source-selector">
+					<label class="radio-card">
+						<input type="radio" name="audio-source" value="procedural" checked />
+						<div class="radio-content">
+							<strong>Real-time Procedural Synthesis</strong>
+							<p>Endless, non-looping Web Audio soundscapes tailored to current space.</p>
+						</div>
+					</label>
+					<label class="radio-card">
+						<input type="radio" name="audio-source" value="youtube-music" />
+						<div class="radio-content">
+							<strong>YouTube Music Stream</strong>
+							<p>Stream your favorite ambient, classical, or meditation music directly from YouTube Music.</p>
+						</div>
+					</label>
+					<label class="radio-card">
+						<input type="radio" name="audio-source" value="classical-stream" />
+						<div class="radio-content">
+							<strong>Indian Carnatic Classical Masterpieces</strong>
+							<p>Authentic Carnatic Ragas (Mohanam, Hamsadhvani, Kalyani) with Veena, Flute & Tanpura.</p>
+						</div>
+					</label>
+				</div>
+
+				<div id="youtube-url-container" class="form-group hidden">
+					<label for="youtube-audio-url">YouTube Music / Video URL</label>
+					<input type="url" id="youtube-audio-url" placeholder="Paste YouTube Music link (e.g. https://music.youtube.com/watch?v=...)" />
+					<button id="btn-load-youtube-url" class="secondary-btn" style="margin-top: 0.5rem;">Load YouTube Music Track</button>
+				</div>
+
+				<hr class="modal-divider" />
+
+				<h3 class="builder-heading">Session Duration Timer</h3>
+				<div class="form-group">
+					<label for="session-timer-select">Target Mindfulness Duration</label>
+					<select id="session-timer-select" class="form-select">
+						<option value="0">Open / Infinite Session</option>
+						<option value="60">1 Minute</option>
+						<option value="180">3 Minutes</option>
+						<option value="300" selected>5 Minutes (Recommended)</option>
+						<option value="600">10 Minutes</option>
+						<option value="900">15 Minutes</option>
+						<option value="1200">20 Minutes</option>
+						<option value="1800">30 Minutes</option>
+					</select>
+				</div>
+
+				<hr class="modal-divider" />
+
+				<div class="form-group checkbox-group">
+					<label class="toggle-switch">
+						<input type="checkbox" id="guidance-chime" checked />
+						<span class="slider"></span>
+					</label>
+					<span class="toggle-label">Natural Breath Air Guidance</span>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<script type="module" src="/src/js/app.js"></script>
+</body>
+</html>
