@@ -1019,11 +1019,15 @@ input:checked + .slider:before {
 @media screen and (min-width: 1800px) {
 	#mode-switcher {
 		top: 2rem;
+		left: 50%;
+		transform: translateX(-50%);
 	}
 
 	#tool-bar {
 		top: 2rem;
 		right: 3rem;
+		left: auto;
+		transform: none;
 	}
 
 	.mode-pill {
@@ -1063,26 +1067,27 @@ input:checked + .slider:before {
 	}
 }
 
-/* Medium Screens, Tiled Desktop Windows & Tablets (<= 1180px) */
-@media screen and (max-width: 1180px) {
+/* Medium Screens, Tiled Desktop Windows & Tablets (<= 1280px) */
+@media screen and (max-width: 1280px) {
 	#mode-switcher {
 		top: 1rem;
 		left: 50%;
 		transform: translateX(-50%);
-		max-width: 90vw;
+		max-width: 92vw;
 	}
 
 	#tool-bar {
-		top: 4.2rem;
-		right: 50%;
+		top: 4.3rem;
+		left: 50%;
+		right: auto;
 		transform: translateX(-50%);
 		justify-content: center;
-		width: auto;
+		width: max-content;
 		gap: 0.6rem;
 	}
 
 	#hero {
-		margin-top: 2.2rem;
+		margin-top: 3.2rem;
 	}
 
 	#h1-text {
@@ -1139,10 +1144,11 @@ input:checked + .slider:before {
 
 	#tool-bar {
 		top: 3.8rem;
-		right: 50%;
-		transform: translateX(50%);
+		left: 50%;
+		right: auto;
+		transform: translateX(-50%);
 		justify-content: center;
-		width: 100%;
+		width: max-content;
 		gap: 0.5rem;
 	}
 
@@ -1232,6 +1238,9 @@ input:checked + .slider:before {
 
 	#tool-bar {
 		top: 3.8rem;
+		left: 50%;
+		right: auto;
+		transform: translateX(-50%);
 		gap: 0.4rem;
 	}
 
