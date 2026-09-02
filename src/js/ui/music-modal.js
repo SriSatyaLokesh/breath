@@ -14,8 +14,19 @@ export function initMusicModal(onTimerChanged) {
 	const youtubeInput = document.getElementById("youtube-audio-url");
 	const loadYoutubeBtn = document.getElementById("btn-load-youtube-url");
 	
-	const timerSelect = document.getElementById("session-timer-select");
 	const chimeToggle = document.getElementById("guidance-chime");
+
+	function syncTimerPills(currentDur) {
+		const pills = document.querySelectorAll(".timer-pill");
+		pills.forEach(pill => {
+			const val = parseInt(pill.dataset.value, 10);
+			if (val === currentDur) {
+				pill.classList.add("active");
+			} else {
+				pill.classList.remove("active");
+			}
+		});
+	}
 
 	function renderYouTubePresets() {
 		if (!youtubeGrid) return;
@@ -63,6 +74,7 @@ export function initMusicModal(onTimerChanged) {
 		modal.classList.add("open");
 		modal.setAttribute("aria-hidden", "false");
 		renderYouTubePresets();
+		syncTimerPills(state.sessionDuration);
 	});
 
 	closeBtn.addEventListener("click", () => {
@@ -124,15 +136,17 @@ export function initMusicModal(onTimerChanged) {
 		});
 	}
 
-	// Session Duration Timer selector
-	if (timerSelect) {
-		timerSelect.addEventListener("change", (e) => {
-			const dur = parseInt(e.target.value, 10);
+	// Interactive Session Duration Timer Pills
+	const timerPills = document.querySelectorAll(".timer-pill");
+	timerPills.forEach(pill => {
+		pill.addEventListener("click", () => {
+			const dur = parseInt(pill.dataset.value, 10);
 			state.sessionDuration = dur;
 			state.sessionTimeRemaining = dur;
+			syncTimerPills(dur);
 			if (onTimerChanged) onTimerChanged(dur);
 		});
-	}
+	});
 
 	// Guidance chime toggle
 	chimeToggle.addEventListener("change", (e) => {

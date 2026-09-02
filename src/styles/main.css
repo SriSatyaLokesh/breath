@@ -5,6 +5,7 @@
 	--font-display: "Instrument Serif", "Cormorant Garamond", serif;
 	--font-ui: "Tenor Sans", sans-serif;
 	--font-mono: "DM Mono", monospace;
+	--tool-btn-bg: rgba(0, 0, 0, 0.45);
 }
 
 *,
@@ -130,6 +131,7 @@ canvas {
 	backdrop-filter: blur(24px);
 	-webkit-backdrop-filter: blur(24px);
 	transition: border-color 1s ease, background 1s ease;
+	max-width: 100%;
 }
 
 .mode-pill {
@@ -166,6 +168,35 @@ canvas {
 		width 0.4s cubic-bezier(0.34, 1.56, 0.64, 1), background 0.8s;
 }
 
+.scroll-hint {
+	display: none;
+	position: absolute;
+	right: 10px;
+	top: 50%;
+	transform: translateY(-50%);
+	z-index: 5;
+	font-family: var(--font-ui);
+	font-size: 1.3rem;
+	line-height: 1;
+	color: var(--theme-accent);
+	pointer-events: none;
+	opacity: 0.85;
+	animation: swipeHint 1.8s ease-in-out infinite;
+	text-shadow: 0 0 10px rgba(var(--theme-accent-rgb), 0.6);
+	transition: opacity 0.4s ease;
+}
+
+@keyframes swipeHint {
+	0%, 100% {
+		transform: translateY(-50%) translateX(0);
+		opacity: 0.4;
+	}
+	50% {
+		transform: translateY(-50%) translateX(4px);
+		opacity: 1;
+	}
+}
+
 /* Floating Tool Controls - Dynamic Theme Accents */
 #tool-bar {
 	position: fixed;
@@ -184,24 +215,25 @@ canvas {
 	height: 38px;
 	padding: 0 0.95rem;
 	border-radius: 19px;
-	border: 1px solid rgba(var(--theme-accent-rgb), 0.32);
-	background: rgba(0, 0, 0, 0.45);
+	border: 1px solid rgba(var(--theme-accent-rgb), 0.38);
+	background: var(--tool-btn-bg, rgba(0, 0, 0, 0.45));
 	backdrop-filter: blur(18px);
 	-webkit-backdrop-filter: blur(18px);
 	color: var(--theme-accent);
 	font-family: var(--font-ui);
 	font-size: 0.68rem;
-	font-weight: 400;
+	font-weight: 500;
 	letter-spacing: 0.12em;
 	text-transform: uppercase;
 	cursor: none;
 	transition: all 0.5s ease;
+	box-shadow: 0 4px 14px rgba(0, 0, 0, 0.08);
 }
 
 .tool-btn:hover {
 	background: rgba(var(--theme-accent-rgb), 0.18);
 	border-color: var(--theme-accent);
-	color: #fff;
+	color: var(--theme-accent);
 }
 
 /* UI Layout */
@@ -649,13 +681,10 @@ body.active .tagline {
 /* YouTube Preset Grid & Cards */
 .yt-grid {
 	display: grid;
-	grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+	grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
 	gap: 0.8rem;
 	margin-top: 0.6rem;
 	margin-bottom: 1.2rem;
-	max-height: 280px;
-	overflow-y: auto;
-	padding-right: 4px;
 }
 
 .yt-card {
@@ -713,6 +742,42 @@ body.active .tagline {
 	white-space: nowrap;
 	overflow: hidden;
 	text-overflow: ellipsis;
+}
+
+/* Custom Interactive Timer Pill Selector */
+.timer-pill-grid {
+	display: grid;
+	grid-template-columns: repeat(4, 1fr);
+	gap: 0.65rem;
+	margin-top: 0.4rem;
+}
+
+.timer-pill {
+	padding: 0.65rem 0.4rem;
+	border-radius: 12px;
+	border: 1px solid rgba(255, 255, 255, 0.12);
+	background: rgba(255, 255, 255, 0.04);
+	color: rgba(255, 255, 255, 0.75);
+	font-family: var(--font-ui);
+	font-size: 0.72rem;
+	font-weight: 500;
+	letter-spacing: 0.04em;
+	cursor: none;
+	text-align: center;
+	transition: all 0.3s ease;
+}
+
+.timer-pill:hover {
+	background: rgba(255, 255, 255, 0.08);
+	border-color: rgba(var(--theme-accent-rgb), 0.4);
+	color: #fff;
+}
+
+.timer-pill.active {
+	background: var(--theme-accent);
+	border-color: var(--theme-accent);
+	color: #fff;
+	box-shadow: 0 4px 14px rgba(var(--theme-accent-rgb), 0.35);
 }
 
 .builder-heading {
@@ -934,17 +999,332 @@ input:checked + .slider:before {
 }
 
 /* Custom scrollbar inside modals */
-.modal-card::-webkit-scrollbar,
-.yt-grid::-webkit-scrollbar {
+.modal-card::-webkit-scrollbar {
 	width: 6px;
 }
-.modal-card::-webkit-scrollbar-track,
-.yt-grid::-webkit-scrollbar-track {
+.modal-card::-webkit-scrollbar-track {
 	background: rgba(0, 0, 0, 0.2);
 	border-radius: 3px;
 }
-.modal-card::-webkit-scrollbar-thumb,
-.yt-grid::-webkit-scrollbar-thumb {
+.modal-card::-webkit-scrollbar-thumb {
 	background: rgba(var(--theme-accent-rgb), 0.3);
 	border-radius: 3px;
+}
+
+/* ==========================================================================
+   RESPONSIVE DESIGN (TABLETS & MOBILE SMARTPHONES)
+   ========================================================================== */
+
+/* Tablets & Small Laptops (<= 1024px) */
+@media screen and (max-width: 1024px) {
+	#mode-switcher {
+		top: 1.2rem;
+		max-width: 90vw;
+	}
+
+	#tool-bar {
+		top: 1.2rem;
+		right: 1.2rem;
+	}
+
+	#h1-text {
+		font-size: clamp(3.2rem, 8vw, 6.2rem);
+	}
+
+	.modal-card {
+		width: min(600px, 92vw);
+		padding: 1.8rem;
+	}
+}
+
+/* Tablets & Large Phones (<= 768px) */
+@media screen and (max-width: 768px) {
+	#mode-switcher {
+		top: 1rem;
+		left: 50%;
+		transform: translateX(-50%);
+		width: calc(100vw - 1.6rem);
+		max-width: 440px;
+	}
+
+	#mode-track {
+		overflow-x: auto;
+		-webkit-overflow-scrolling: touch;
+		scrollbar-width: none;
+		justify-content: flex-start;
+		padding: 4px 28px 4px 4px;
+		mask-image: linear-gradient(to right, rgba(0,0,0,1) 0%, rgba(0,0,0,1) calc(100% - 32px), rgba(0,0,0,0.15) 100%);
+		-webkit-mask-image: linear-gradient(to right, rgba(0,0,0,1) 0%, rgba(0,0,0,1) calc(100% - 32px), rgba(0,0,0,0.15) 100%);
+	}
+
+	#mode-track::-webkit-scrollbar {
+		display: none;
+	}
+
+	.scroll-hint {
+		display: block;
+	}
+
+	.mode-pill {
+		padding: 0 0.95rem;
+		font-size: 0.65rem;
+		height: 32px;
+		border-radius: 16px;
+		flex-shrink: 0;
+		scroll-snap-align: center;
+	}
+
+	#mode-thumb {
+		height: 32px;
+		border-radius: 16px;
+	}
+
+	#tool-bar {
+		top: 3.8rem;
+		right: 50%;
+		transform: translateX(50%);
+		justify-content: center;
+		width: 100%;
+		gap: 0.5rem;
+	}
+
+	.tool-btn {
+		height: 34px;
+		padding: 0 0.8rem;
+		font-size: 0.62rem;
+	}
+
+	#h1-text {
+		font-size: clamp(2.6rem, 10vw, 4.8rem);
+	}
+
+	#cue {
+		font-size: clamp(0.95rem, 3.8vw, 1.15rem);
+		margin-bottom: 1.2rem;
+	}
+
+	#breath-btn {
+		width: 98px;
+		height: 98px;
+	}
+
+	#session-label {
+		bottom: 1.2rem;
+		left: 1.2rem;
+	}
+
+	#bar-counter {
+		bottom: 1.2rem;
+		right: 1.2rem;
+	}
+
+	#affirmation {
+		bottom: 4.8rem;
+		width: 92vw;
+	}
+
+	#affirmation p {
+		font-size: clamp(1rem, 4vw, 1.35rem);
+	}
+
+	.modal-card {
+		padding: 1.5rem 1.2rem;
+		border-radius: 20px;
+		max-height: 90vh;
+	}
+
+	.modal-title {
+		font-size: 1.7rem;
+	}
+
+	.pattern-grid {
+		grid-template-columns: 1fr;
+		gap: 0.7rem;
+	}
+
+	.yt-grid {
+		grid-template-columns: 1fr;
+		gap: 0.65rem;
+	}
+
+	.timer-pill-grid {
+		grid-template-columns: repeat(4, 1fr);
+		gap: 0.5rem;
+	}
+}
+
+/* Mobile Smartphones (<= 480px) */
+@media screen and (max-width: 480px) {
+	html, body {
+		cursor: auto; /* Standard touch cursor on mobile devices */
+	}
+
+	.mode-pill, .tool-btn, .pattern-card, .yt-card, .timer-pill, #breath-btn, .modal-close, .primary-btn, .secondary-btn {
+		cursor: pointer;
+	}
+
+	#dot, #ring {
+		display: none !important; /* Hide custom desktop cursor dot/ring on mobile touch screens */
+	}
+
+	#mode-switcher {
+		top: 0.8rem;
+		width: calc(100vw - 1.6rem);
+	}
+
+	#tool-bar {
+		top: 3.8rem;
+		gap: 0.4rem;
+	}
+
+	.tool-btn {
+		height: 32px;
+		padding: 0 0.7rem;
+		font-size: 0.58rem;
+		letter-spacing: 0.08em;
+	}
+
+	.tool-btn svg {
+		width: 15px;
+		height: 15px;
+	}
+
+	#h1-text {
+		font-size: clamp(2.2rem, 11vw, 3.8rem);
+		line-height: 1.0;
+	}
+
+	.tagline {
+		font-size: 0.5rem;
+		letter-spacing: 0.28em;
+	}
+
+	#cue {
+		font-size: 0.95rem;
+		padding: 0 1rem;
+	}
+
+	#breath-btn {
+		width: 90px;
+		height: 90px;
+	}
+
+	#btn-label {
+		font-size: 0.52rem;
+		letter-spacing: 0.36em;
+	}
+
+	.timer-pill-grid {
+		grid-template-columns: repeat(2, 1fr);
+		gap: 0.5rem;
+	}
+
+	.timer-pill {
+		padding: 0.6rem 0.3rem;
+		font-size: 0.7rem;
+	}
+
+	.timing-grid {
+		grid-template-columns: repeat(2, 1fr);
+		gap: 0.5rem;
+	}
+
+	#session-label .sl-p {
+		font-size: 0.92rem;
+	}
+
+	#session-label .sl-d {
+		font-size: 0.4rem;
+		letter-spacing: 0.18em;
+	}
+}
+
+/* ==========================================================================
+   CLASSICAL LIGHT PARCHMENT THEME OVERRIDES
+   ========================================================================== */
+body[data-theme="classical"] {
+	background: #f5eee6 !important;
+	color: #2a1215 !important;
+}
+
+body[data-theme="classical"] .tool-btn {
+	background: rgba(255, 252, 246, 0.92) !important;
+	border: 1px solid rgba(165, 28, 48, 0.45) !important;
+	color: #a51c30 !important;
+	box-shadow: 0 4px 16px rgba(165, 28, 48, 0.12) !important;
+}
+
+body[data-theme="classical"] .tool-btn:hover {
+	background: #a51c30 !important;
+	color: #ffffff !important;
+}
+
+body[data-theme="classical"] #mode-track {
+	background: rgba(255, 252, 246, 0.92) !important;
+	border: 1px solid rgba(165, 28, 48, 0.35) !important;
+	box-shadow: 0 4px 18px rgba(165, 28, 48, 0.1) !important;
+}
+
+body[data-theme="classical"] .mode-pill {
+	color: #501820 !important;
+}
+
+body[data-theme="classical"] .mode-pill[data-mode="classical"] {
+	color: #ffffff !important;
+}
+
+body[data-theme="classical"] #mode-thumb {
+	background: #a51c30 !important;
+}
+
+body[data-theme="classical"] #btn-fill {
+	border-color: rgba(165, 28, 48, 0.4) !important;
+}
+
+body[data-theme="classical"] .modal-card {
+	background: rgba(252, 246, 238, 0.96) !important;
+	border: 1px solid rgba(165, 28, 48, 0.35) !important;
+	color: #2a1215 !important;
+	box-shadow: 0 24px 60px rgba(165, 28, 48, 0.15) !important;
+}
+
+body[data-theme="classical"] .modal-close {
+	color: #8c1426 !important;
+}
+
+body[data-theme="classical"] .modal-subtitle,
+body[data-theme="classical"] .form-group label,
+body[data-theme="classical"] .toggle-label {
+	color: rgba(80, 24, 32, 0.75) !important;
+}
+
+body[data-theme="classical"] .yt-card,
+body[data-theme="classical"] .pattern-card,
+body[data-theme="classical"] .radio-card {
+	background: rgba(255, 255, 255, 0.65) !important;
+	border: 1px solid rgba(165, 28, 48, 0.18) !important;
+}
+
+body[data-theme="classical"] .yt-card-title,
+body[data-theme="classical"] .pattern-card-title,
+body[data-theme="classical"] .radio-content strong {
+	color: #2a1215 !important;
+}
+
+body[data-theme="classical"] .yt-card-subtitle,
+body[data-theme="classical"] .pattern-card-desc,
+body[data-theme="classical"] .radio-content p {
+	color: rgba(80, 24, 32, 0.65) !important;
+}
+
+body[data-theme="classical"] .timer-pill {
+	background: rgba(255, 255, 255, 0.7) !important;
+	border: 1px solid rgba(165, 28, 48, 0.22) !important;
+	color: #501820 !important;
+}
+
+body[data-theme="classical"] .timer-pill.active {
+	background: #a51c30 !important;
+	border-color: #a51c30 !important;
+	color: #ffffff !important;
 }

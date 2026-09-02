@@ -146,10 +146,12 @@ function stopAff() {
 
 function applyTheme(m) {
 	const th = T[m];
+	document.body.dataset.theme = m;
 
 	document.documentElement.style.setProperty("--theme-accent", th.accentHex);
 	document.documentElement.style.setProperty("--theme-accent-rgb", th.accent.join(","));
 	document.documentElement.style.setProperty("--theme-bg", th.bg);
+	document.documentElement.style.setProperty("--tool-btn-bg", th.toolBtnBg || "rgba(0, 0, 0, 0.45)");
 
 	document.body.style.background = th.bg;
 	const vigEl = document.getElementById("vig");
@@ -174,19 +176,21 @@ function applyTheme(m) {
 		nav.style.background = th.navBg;
 		nav.style.borderColor = th.navBorder;
 	}
-	if (thumb) thumb.style.background = th.thumbBg;
+	if (thumb) {
+		thumb.style.background = th.pillActiveBg || th.accentHex;
+	}
 
 	document.querySelectorAll(".mode-pill").forEach((p) => {
 		const isAct = p.dataset.mode === m;
 		p.style.color = isAct ? th.pillActive : th.pillDim;
-		p.style.background = isAct ? th.pillActiveBg : th.pillDimBg;
+		p.style.background = "transparent"; // Button background is transparent so #mode-thumb is the single sliding indicator
 		p.style.fontWeight = isAct ? "700" : "400";
 	});
 
 	const labelEl = document.getElementById("btn-label");
 	const [rr, rg, rb] = th.accent;
 	if (labelEl) {
-		labelEl.style.color = `rgba(${Math.min(rr + 40, 255)},${Math.min(rg + 40, 255)},${Math.min(rb + 40, 255)},.9)`;
+		labelEl.style.color = m === "classical" ? "#8c1426" : `rgba(${Math.min(rr + 40, 255)},${Math.min(rg + 40, 255)},${Math.min(rb + 40, 255)},.9)`;
 	}
 
 	const fl = document.getElementById("mode-flash");
@@ -285,10 +289,13 @@ function posThumb(p) {
 	const trk = document.getElementById("mode-track");
 	const thm = document.getElementById("mode-thumb");
 	if (!trk || !thm || !p) return;
-	const tr = trk.getBoundingClientRect();
-	const pr = p.getBoundingClientRect();
-	thm.style.left = pr.left - tr.left - 3 + "px";
-	thm.style.width = pr.width + "px";
+
+	thm.style.left = p.offsetLeft + "px";
+	thm.style.width = p.offsetWidth + "px";
+
+	try {
+		p.scrollIntoView({ behavior: "smooth", inline: "center", block: "nearest" });
+	} catch (e) {}
 }
 
 let lastTime = 0;
@@ -380,6 +387,19 @@ function bootstrap() {
 	buildCueText(initTh.cueStart);
 	updateSessionLabel();
 
+	// Mobile scroll hint fade listener
+	const trk = document.getElementById("mode-track");
+	const hint = document.getElementById("scroll-hint-right");
+	if (trk && hint) {
+		trk.addEventListener("scroll", () => {
+			if (trk.scrollLeft + trk.clientWidth >= trk.scrollWidth - 12) {
+				hint.style.opacity = "0";
+			} else {
+				hint.style.opacity = "0.85";
+			}
+		});
+	}
+
 	// Mode Pill Listeners
 	document.querySelectorAll(".mode-pill").forEach((p) => {
 		p.addEventListener("click", () => {
@@ -394,11 +414,18 @@ function bootstrap() {
 			state.sessionDuration = newTh.defaultDuration || 300;
 			state.sessionTimeRemaining = state.sessionDuration;
 
-			const timerSelect = document.getElementById("session-timer-select");
-			if (timerSelect) timerSelect.value = state.sessionDuration.toString();
+			const timerPills = document.querySelectorAll(".timer-pill");
+			timerPills.forEach(pill => {
+				const val = parseInt(pill.dataset.value, 10);
+				if (val === state.sessionDuration) {
+					pill.classList.add("active");
+				} else {
+					pill.classList.remove("active");
+				}
+			});
 
-			posThumb(p);
 			applyTheme(state.mode);
+			posThumb(p);
 			state.textAnim = Math.floor(Math.random() * 6);
 
 			buildHeroText(state.isActive ? newTh.heroAct : newTh.heroIdle, state.isActive ? newTh.tagAct : newTh.tagIdle);
@@ -477,7 +504,11 @@ function bootstrap() {
 		updateSessionLabel();
 	});
 
-	setTimeout(() => posThumb(document.querySelector('.mode-pill[data-mode="breathe"]')), 60);
+	setTimeout(() => {
+		const activePill = document.querySelector('.mode-pill[data-mode="breathe"]');
+		if (activePill) posThumb(activePill);
+	}, 60);
+
 	setTimeout(() => {
 		const hero = document.getElementById("hero");
 		if (hero) hero.classList.add("in");
@@ -494,6 +525,11 @@ function bootstrap() {
 		if (sessionLbl) sessionLbl.classList.add("show");
 		if (barCounter) barCounter.classList.add("show");
 	}, 560);
+
+	window.addEventListener("resize", () => {
+		const activePill = document.querySelector(`.mode-pill[data-mode="${state.mode}"]`);
+		if (activePill) posThumb(activePill);
+	});
 
 	requestAnimationFrame(renderLoop);
 }

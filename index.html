@@ -190,6 +190,7 @@
 				<button class="mode-pill" data-mode="classical" aria-label="Switch to Classical Space">Classical</button>
 				<button class="mode-pill" data-mode="jazz" aria-label="Switch to Jazz Space">Jazz</button>
 			</div>
+			<div id="scroll-hint-right" class="scroll-hint" aria-hidden="true">›</div>
 		</nav>
 	</header>
 
@@ -376,19 +377,20 @@
 
 				<hr class="modal-divider" />
 
+				<!-- Custom Luxury Duration Pill Selector -->
 				<h3 class="builder-heading">Session Duration Timer</h3>
-				<div class="form-group">
-					<label for="session-timer-select">Target Mindfulness Duration</label>
-					<select id="session-timer-select" class="form-select">
-						<option value="0">Open / Infinite Session</option>
-						<option value="60">1 Minute</option>
-						<option value="180">3 Minutes</option>
-						<option value="300" selected>5 Minutes (Recommended)</option>
-						<option value="600">10 Minutes</option>
-						<option value="900">15 Minutes</option>
-						<option value="1200">20 Minutes</option>
-						<option value="1800">30 Minutes</option>
-					</select>
+				<div class="timer-selector-container">
+					<label style="font-family: var(--font-ui); font-size: 0.64rem; letter-spacing: 0.1em; text-transform: uppercase; color: rgba(255,255,255,0.6); margin-bottom: 0.6rem; display: block;">Target Mindfulness Duration</label>
+					<div id="timer-pill-grid" class="timer-pill-grid">
+						<button type="button" class="timer-pill" data-value="0">Open</button>
+						<button type="button" class="timer-pill" data-value="60">1 Min</button>
+						<button type="button" class="timer-pill" data-value="180">3 Mins</button>
+						<button type="button" class="timer-pill active" data-value="300">5 Mins</button>
+						<button type="button" class="timer-pill" data-value="600">10 Mins</button>
+						<button type="button" class="timer-pill" data-value="900">15 Mins</button>
+						<button type="button" class="timer-pill" data-value="1200">20 Mins</button>
+						<button type="button" class="timer-pill" data-value="1800">30 Mins</button>
+					</div>
 				</div>
 
 				<hr class="modal-divider" />

@@ -6,6 +6,12 @@ let pendingVideoId = null;
 
 export const YOUTUBE_PRESETS = [
 	{
+		id: "y6lFq2x6YbE",
+		url: "https://youtu.be/y6lFq2x6YbE",
+		title: "Deep Relaxation & Tranquil Mindfulness",
+		subtitle: "Gentle Healing Frequency & Peaceful Ambience"
+	},
+	{
 		id: "3Zmk5G6h-qo",
 		url: "https://youtu.be/3Zmk5G6h-qo",
 		title: "Deep Ambient Flute & Tanpura",
