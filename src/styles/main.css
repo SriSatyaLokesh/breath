@@ -1012,19 +1012,77 @@ input:checked + .slider:before {
 }
 
 /* ==========================================================================
-   RESPONSIVE DESIGN (TABLETS & MOBILE SMARTPHONES)
+   RESPONSIVE DESIGN (ULTRAWIDE, MONITORS, TABLETS & MOBILE SMARTPHONES)
    ========================================================================== */
 
-/* Tablets & Small Laptops (<= 1024px) */
-@media screen and (max-width: 1024px) {
+/* Ultrawide & 4K Displays (>= 1800px) */
+@media screen and (min-width: 1800px) {
 	#mode-switcher {
-		top: 1.2rem;
+		top: 2rem;
+	}
+
+	#tool-bar {
+		top: 2rem;
+		right: 3rem;
+	}
+
+	.mode-pill {
+		font-size: 0.82rem;
+		height: 38px;
+		padding: 0 1.4rem;
+	}
+
+	#mode-track {
+		height: 48px;
+		border-radius: 24px;
+	}
+
+	#mode-thumb {
+		height: 38px;
+		border-radius: 19px;
+	}
+
+	.tool-btn {
+		height: 44px;
+		padding: 0 1.2rem;
+		font-size: 0.78rem;
+		border-radius: 22px;
+	}
+
+	#h1-text {
+		font-size: clamp(4.5rem, 7vw, 9.5rem);
+	}
+
+	#breath-btn {
+		width: 135px;
+		height: 135px;
+	}
+
+	#btn-label {
+		font-size: 0.64rem;
+	}
+}
+
+/* Medium Screens, Tiled Desktop Windows & Tablets (<= 1180px) */
+@media screen and (max-width: 1180px) {
+	#mode-switcher {
+		top: 1rem;
+		left: 50%;
+		transform: translateX(-50%);
 		max-width: 90vw;
 	}
 
 	#tool-bar {
-		top: 1.2rem;
-		right: 1.2rem;
+		top: 4.2rem;
+		right: 50%;
+		transform: translateX(-50%);
+		justify-content: center;
+		width: auto;
+		gap: 0.6rem;
+	}
+
+	#hero {
+		margin-top: 2.2rem;
 	}
 
 	#h1-text {
@@ -1037,10 +1095,10 @@ input:checked + .slider:before {
 	}
 }
 
-/* Tablets & Large Phones (<= 768px) */
+/* Tablets & Mobile Touch Screens (<= 768px) */
 @media screen and (max-width: 768px) {
 	#mode-switcher {
-		top: 1rem;
+		top: 0.8rem;
 		left: 50%;
 		transform: translateX(-50%);
 		width: calc(100vw - 1.6rem);
