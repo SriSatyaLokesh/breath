@@ -37,6 +37,8 @@ export const state = {
 
 	// Audio & Settings State
 	masterVolume: 0.7,
+	ambientVolume: 0.5,
+	dualAudioEnabled: false,
 	audioSource: "procedural", // "procedural", "youtube-music", "classical-stream"
 	customAudioUrl: "",
 	youtubeUrl: "",

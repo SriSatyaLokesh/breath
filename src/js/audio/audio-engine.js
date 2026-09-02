@@ -31,7 +31,6 @@ export const CLASSICAL_TRACKS = [
  * - INHALE: Soft, soothing inhalation air flow through the nose/throat.
  * - HOLD: Gentle resting stillness.
  * - EXHALE: Soft, relaxing exhalation air release through the throat/lips.
- * Zero synthetic sine wave tones, zero pitch sliding, zero artificial sounds.
  */
 class NaturalAirBreath {
 	constructor(actx, destination) {
@@ -79,7 +78,7 @@ class NaturalAirBreath {
 		this.filterNode.Q.setValueAtTime(0.8, now);
 
 		this.gainNode = this.actx.createGain();
-		this.gainNode.gain.setValueAtTime(0, now);
+		this.gainNode.gain.setValueAtTime(0.0001, now);
 
 		this.noiseNode.connect(this.filterNode);
 		this.filterNode.connect(this.gainNode);
@@ -89,25 +88,28 @@ class NaturalAirBreath {
 	}
 
 	update(bs, phaseName) {
-		if (!this.isPlaying || !this.actx || !this.gainNode || !state.guidanceChime) return;
+		if (!this.isPlaying || !this.gainNode || !this.actx || !state.guidanceChime) {
+			if (this.gainNode) this.gainNode.gain.setValueAtTime(0.0001, this.actx ? this.actx.currentTime : 0);
+			return;
+		}
+
 		const now = this.actx.currentTime;
+		const master = state.masterVolume;
 
-		if (phaseName === "hold") {
-			this.gainNode.gain.setTargetAtTime(0.001, now, 0.2);
-		} else if (phaseName === "inhale") {
-			const airVol = Math.max(0.001, bs * 0.18);
-			const airCutoff = 1000 + bs * 800;
-
-			this.gainNode.gain.setTargetAtTime(airVol, now, 0.12);
-			this.filterNode.frequency.setTargetAtTime(airCutoff, now, 0.12);
-			this.filterNode.Q.setTargetAtTime(0.9, now, 0.12);
+		if (phaseName === "inhale") {
+			const freq = 650 + bs * 1150;
+			const gainVal = (0.015 + bs * 0.14) * master;
+			this.filterNode.frequency.setTargetAtTime(freq, now, 0.08);
+			this.filterNode.Q.setTargetAtTime(0.75 + bs * 0.4, now, 0.08);
+			this.gainNode.gain.setTargetAtTime(gainVal, now, 0.08);
 		} else if (phaseName === "exhale") {
-			const airVol = Math.max(0.001, bs * 0.20);
-			const airCutoff = 1600 - (1 - bs) * 900;
-
-			this.gainNode.gain.setTargetAtTime(airVol, now, 0.12);
-			this.filterNode.frequency.setTargetAtTime(airCutoff, now, 0.12);
-			this.filterNode.Q.setTargetAtTime(0.6, now, 0.12);
+			const freq = 1450 - bs * 880;
+			const gainVal = (0.012 + bs * 0.12) * master;
+			this.filterNode.frequency.setTargetAtTime(freq, now, 0.08);
+			this.filterNode.Q.setTargetAtTime(0.55 + bs * 0.3, now, 0.08);
+			this.gainNode.gain.setTargetAtTime(gainVal, now, 0.08);
+		} else {
+			this.gainNode.gain.setTargetAtTime(0.0001, now, 0.15);
 		}
 	}
 
@@ -115,79 +117,90 @@ class NaturalAirBreath {
 		if (!this.isPlaying) return;
 		this.isPlaying = false;
 		if (this.gainNode && this.actx) {
-			try {
-				this.gainNode.gain.setTargetAtTime(0, this.actx.currentTime, 0.1);
-			} catch (e) {}
+			this.gainNode.gain.setTargetAtTime(0.0001, this.actx.currentTime, 0.1);
 		}
 		setTimeout(() => {
-			try {
-				if (this.noiseNode) this.noiseNode.stop();
-				if (this.noiseNode) this.noiseNode.disconnect();
-			} catch (e) {}
-			this.noiseNode = null;
-			this.filterNode = null;
-			this.gainNode = null;
-		}, 250);
+			if (this.noiseNode) {
+				try { this.noiseNode.stop(); } catch(e){}
+				this.noiseNode.disconnect();
+				this.noiseNode = null;
+			}
+			if (this.filterNode) {
+				this.filterNode.disconnect();
+				this.filterNode = null;
+			}
+			if (this.gainNode) {
+				this.gainNode.disconnect();
+				this.gainNode = null;
+			}
+		}, 150);
 	}
 }
 
-export class AudioEngine {
+class AudioEngine {
 	constructor() {
 		this.actx = null;
-		this.mGain = null;
-		this.bgGain = null;
-		this.cueGain = null;
-		this.musicAudio = null;
+		this.masterGain = null;
+		this.ambientGain = null;
 		this.classicalSynth = null;
 		this.natureSynth = null;
 		this.jazzSynth = null;
 		this.ambientSynth = null;
-		this.breathWave = null;
+		this.airBreath = null;
+		this.musicAudio = null;
 	}
 
 	initCtx() {
-		if (this.actx) return;
-		this.actx = new (window.AudioContext || window.webkitAudioContext)();
-		
-		this.mGain = this.actx.createGain();
-		this.mGain.gain.setValueAtTime(0, this.actx.currentTime);
-		this.mGain.gain.linearRampToValueAtTime(state.masterVolume, this.actx.currentTime + 2.5);
-		this.mGain.connect(this.actx.destination);
+		if (this.actx) {
+			if (this.actx.state === "suspended") this.actx.resume();
+			return;
+		}
+		const AC = window.AudioContext || window.webkitAudioContext;
+		this.actx = new AC();
 
-		this.bgGain = this.actx.createGain();
-		this.bgGain.gain.value = 0.65;
-		this.bgGain.connect(this.mGain);
+		this.masterGain = this.actx.createGain();
+		this.masterGain.gain.setValueAtTime(state.masterVolume, this.actx.currentTime);
+		this.masterGain.connect(this.actx.destination);
 
-		this.cueGain = this.actx.createGain();
-		this.cueGain.gain.value = 0.90;
-		this.cueGain.connect(this.mGain);
+		this.ambientGain = this.actx.createGain();
+		this.ambientGain.gain.setValueAtTime(state.ambientVolume, this.actx.currentTime);
+		this.ambientGain.connect(this.masterGain);
 
-		this.classicalSynth = new ClassicalSynth(this.actx, this.bgGain);
-		this.natureSynth = new NatureSynth(this.actx, this.bgGain);
-		this.jazzSynth = new JazzSynth(this.actx, this.bgGain);
-		this.ambientSynth = new AmbientSynth(this.actx, this.bgGain);
-		this.breathWave = new NaturalAirBreath(this.actx, this.cueGain);
+		this.classicalSynth = new ClassicalSynth(this.actx, this.ambientGain);
+		this.natureSynth = new NatureSynth(this.actx, this.ambientGain);
+		this.jazzSynth = new JazzSynth(this.actx, this.ambientGain);
+		this.ambientSynth = new AmbientSynth(this.actx, this.ambientGain);
+		this.airBreath = new NaturalAirBreath(this.actx, this.masterGain);
 	}
 
-	setVolume(vol) {
-		state.masterVolume = vol;
-		if (this.mGain && this.actx) {
-			this.mGain.gain.setValueAtTime(vol, this.actx.currentTime);
+	setMasterVolume(val) {
+		state.masterVolume = val;
+		if (this.masterGain && this.actx) {
+			this.masterGain.gain.setTargetAtTime(val, this.actx.currentTime, 0.05);
 		}
+		setYouTubeVolume(Math.round(val * 100));
 		if (this.musicAudio) {
-			this.musicAudio.volume = Math.min(vol, 0.65);
+			this.musicAudio.volume = Math.min(val, 0.65);
 		}
-		setYouTubeVolume(vol);
 	}
 
-	stopMusicTrack() {
-		if (this.musicAudio) {
-			try {
-				this.musicAudio.pause();
-				this.musicAudio.src = "";
-			} catch (e) {}
-			this.musicAudio = null;
+	setAmbientVolume(val) {
+		state.ambientVolume = val;
+		if (this.ambientGain && this.actx) {
+			this.ambientGain.gain.setTargetAtTime(val, this.actx.currentTime, 0.05);
 		}
+	}
+
+	startBreathWave() {
+		if (this.airBreath) this.airBreath.start();
+	}
+
+	stopBreathWave() {
+		if (this.airBreath) this.airBreath.stop();
+	}
+
+	updateBreathWave(bs, phaseName) {
+		if (this.airBreath) this.airBreath.update(bs, phaseName);
 	}
 
 	stopAllSynths() {
@@ -195,67 +208,28 @@ export class AudioEngine {
 		if (this.natureSynth) this.natureSynth.stop();
 		if (this.jazzSynth) this.jazzSynth.stop();
 		if (this.ambientSynth) this.ambientSynth.stop();
-		if (this.breathWave) this.breathWave.stop();
 	}
 
-	stopAudio(cb) {
-		this.stopMusicTrack();
-		pauseYouTubeTrack();
-		this.stopAllSynths();
-
-		if (!this.actx || !this.mGain) {
-			if (cb) cb();
-			return;
-		}
-
-		try {
-			this.mGain.gain.cancelScheduledValues(this.actx.currentTime);
-			this.mGain.gain.linearRampToValueAtTime(0, this.actx.currentTime + 1.2);
-		} catch (e) {}
-
-		setTimeout(() => {
-			try {
-				this.actx.close();
-			} catch (e) {}
-			this.actx = null;
-			this.mGain = null;
-			this.bgGain = null;
-			this.cueGain = null;
-			this.breathWave = null;
-			if (cb) cb();
-		}, 1300);
-	}
-
-	startBreathWave() {
-		this.initCtx();
-		if (this.breathWave) this.breathWave.start();
-	}
-
-	updateBreathWave(bs, phaseName) {
-		if (!this.actx) return;
-
-		// Ensure background music, YouTube stream, and procedural synths play continuously without pausing during Hold
-		if (this.bgGain && this.bgGain.gain.value !== 0.65) {
-			this.bgGain.gain.setValueAtTime(0.65, this.actx.currentTime);
-		}
+	stopMusicTrack() {
 		if (this.musicAudio) {
-			this.musicAudio.volume = Math.min(state.masterVolume, 0.65);
+			this.musicAudio.pause();
+			this.musicAudio = null;
 		}
-		setYouTubeVolume(state.masterVolume);
+		pauseYouTubeTrack();
+	}
 
-		if (this.breathWave) {
-			this.breathWave.update(bs, phaseName);
-		}
+	stopAudio() {
+		this.stopAllSynths();
+		this.stopMusicTrack();
+		this.stopBreathWave();
 	}
 
 	playStreamTrack(url, name, onFail) {
-		const trackNameEl = document.getElementById("track-name");
 		this.stopMusicTrack();
+		const trackNameEl = document.getElementById("track-name");
 
-		this.musicAudio = new Audio();
+		this.musicAudio = new Audio(url);
 		this.musicAudio.crossOrigin = "anonymous";
-		this.musicAudio.preload = "auto";
-		this.musicAudio.src = url;
 		this.musicAudio.volume = 0;
 
 		const timeout = setTimeout(() => {
@@ -307,6 +281,11 @@ export class AudioEngine {
 				trackNameEl.classList.add("show");
 			}
 			playYouTubeTrack(state.youtubeVideoId);
+
+			// Dual-Engine Audio Layering: If dual audio is enabled, layer procedural soundscape underneath!
+			if (state.dualAudioEnabled) {
+				this.startProceduralMode(mode);
+			}
 			return;
 		}
 

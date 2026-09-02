@@ -1,6 +1,9 @@
 import { state } from "../state.js";
 import { audioEngine } from "../audio/audio-engine.js";
 import { extractYouTubeId, YOUTUBE_PRESETS } from "../audio/youtube-player.js";
+import { MINDFULNESS_JOURNEYS } from "../journeys.js";
+import { setActivePattern } from "../breath-patterns.js";
+import { T } from "../themes.js";
 
 export function initMusicModal(onTimerChanged) {
 	const modal = document.getElementById("music-modal");
@@ -10,6 +13,11 @@ export function initMusicModal(onTimerChanged) {
 	const volumeSlider = document.getElementById("master-volume");
 	const volumeValLabel = document.getElementById("volume-val");
 	
+	const ambientSlider = document.getElementById("ambient-volume");
+	const ambientValLabel = document.getElementById("ambient-val");
+	const dualAudioToggle = document.getElementById("dual-audio-toggle");
+
+	const journeysGrid = document.getElementById("journeys-preset-grid");
 	const youtubeGrid = document.getElementById("youtube-preset-grid");
 	const youtubeInput = document.getElementById("youtube-audio-url");
 	const loadYoutubeBtn = document.getElementById("btn-load-youtube-url");
@@ -25,6 +33,54 @@ export function initMusicModal(onTimerChanged) {
 			} else {
 				pill.classList.remove("active");
 			}
+		});
+	}
+
+	function renderJourneys() {
+		if (!journeysGrid) return;
+		journeysGrid.innerHTML = "";
+
+		MINDFULNESS_JOURNEYS.forEach(j => {
+			const card = document.createElement("div");
+			card.className = "journey-card";
+			card.innerHTML = `
+				<div class="journey-card-badge">${j.badge}</div>
+				<div class="journey-card-title">${j.title}</div>
+				<div class="journey-card-subtitle">${j.subtitle}</div>
+				<div class="journey-card-desc">${j.desc}</div>
+			`;
+
+			card.addEventListener("click", () => {
+				// Apply Breath Pattern
+				setActivePattern(j.patternId);
+				state.activePattern = { id: j.patternId, name: j.title, detail: j.subtitle };
+
+				// Apply Duration
+				state.sessionDuration = j.duration;
+				state.sessionTimeRemaining = j.duration;
+				syncTimerPills(j.duration);
+				if (onTimerChanged) onTimerChanged(j.duration);
+
+				// Apply Space & Audio Mode
+				if (j.audioMode === "youtube-music" && j.youtubeUrl) {
+					const vid = extractYouTubeId(j.youtubeUrl);
+					if (vid) {
+						state.youtubeUrl = j.youtubeUrl;
+						state.youtubeVideoId = vid;
+						state.audioSource = "youtube-music";
+					}
+				} else {
+					state.audioSource = j.audioMode;
+				}
+
+				// Trigger Mode Switch Pill Click
+				const pillBtn = document.querySelector(`.mode-pill[data-mode="${j.spaceMode}"]`);
+				if (pillBtn) pillBtn.click();
+
+				modal.classList.remove("open");
+			});
+
+			journeysGrid.appendChild(card);
 		});
 	}
 
@@ -50,11 +106,9 @@ export function initMusicModal(onTimerChanged) {
 				state.youtubeUrl = track.url;
 				state.audioSource = "youtube-music";
 
-				// Update radio check
 				const ytRadio = document.querySelector('input[name="audio-source"][value="youtube-music"]');
 				if (ytRadio) ytRadio.checked = true;
 
-				// Update active state in grid
 				document.querySelectorAll(".yt-card").forEach(c => c.classList.remove("active"));
 				card.classList.add("active");
 
@@ -68,11 +122,13 @@ export function initMusicModal(onTimerChanged) {
 		});
 	}
 
+	renderJourneys();
 	renderYouTubePresets();
 
 	openBtn.addEventListener("click", () => {
 		modal.classList.add("open");
 		modal.setAttribute("aria-hidden", "false");
+		renderJourneys();
 		renderYouTubePresets();
 		syncTimerPills(state.sessionDuration);
 	});
@@ -89,12 +145,33 @@ export function initMusicModal(onTimerChanged) {
 		}
 	});
 
-	// Volume slider
-	volumeSlider.addEventListener("input", (e) => {
-		const val = parseFloat(e.target.value);
-		volumeValLabel.textContent = Math.round(val * 100) + "%";
-		audioEngine.setVolume(val);
-	});
+	// Master volume slider
+	if (volumeSlider) {
+		volumeSlider.addEventListener("input", (e) => {
+			const val = parseFloat(e.target.value);
+			if (volumeValLabel) volumeValLabel.textContent = Math.round(val * 100) + "%";
+			audioEngine.setMasterVolume(val);
+		});
+	}
+
+	// Ambient Layer Balance Volume Slider
+	if (ambientSlider) {
+		ambientSlider.addEventListener("input", (e) => {
+			const val = parseFloat(e.target.value);
+			if (ambientValLabel) ambientValLabel.textContent = Math.round(val * 100) + "%";
+			audioEngine.setAmbientVolume(val);
+		});
+	}
+
+	// Dual Audio Toggle
+	if (dualAudioToggle) {
+		dualAudioToggle.addEventListener("change", (e) => {
+			state.dualAudioEnabled = e.target.checked;
+			if (state.isActive) {
+				audioEngine.startAudioForMode(state.mode);
+			}
+		});
+	}
 
 	// Radio source selectors
 	const sourceRadios = document.querySelectorAll('input[name="audio-source"]');
@@ -120,7 +197,6 @@ export function initMusicModal(onTimerChanged) {
 				state.youtubeVideoId = videoId;
 				state.audioSource = "youtube-music";
 				
-				// Automatically check the YouTube Music radio option
 				const ytRadio = document.querySelector('input[name="audio-source"][value="youtube-music"]');
 				if (ytRadio) ytRadio.checked = true;
 
@@ -149,7 +225,9 @@ export function initMusicModal(onTimerChanged) {
 	});
 
 	// Guidance chime toggle
-	chimeToggle.addEventListener("change", (e) => {
-		state.guidanceChime = e.target.checked;
-	});
+	if (chimeToggle) {
+		chimeToggle.addEventListener("change", (e) => {
+			state.guidanceChime = e.target.checked;
+		});
+	}
 }
