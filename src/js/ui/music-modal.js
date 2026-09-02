@@ -1,6 +1,6 @@
 import { state } from "../state.js";
 import { audioEngine } from "../audio/audio-engine.js";
-import { extractYouTubeId } from "../audio/youtube-player.js";
+import { extractYouTubeId, YOUTUBE_PRESETS } from "../audio/youtube-player.js";
 
 export function initMusicModal(onTimerChanged) {
 	const modal = document.getElementById("music-modal");
@@ -11,15 +11,60 @@ export function initMusicModal(onTimerChanged) {
 	const volumeValLabel = document.getElementById("volume-val");
 	
 	const youtubeContainer = document.getElementById("youtube-url-container");
+	const youtubeGrid = document.getElementById("youtube-preset-grid");
 	const youtubeInput = document.getElementById("youtube-audio-url");
 	const loadYoutubeBtn = document.getElementById("btn-load-youtube-url");
 	
 	const timerSelect = document.getElementById("session-timer-select");
 	const chimeToggle = document.getElementById("guidance-chime");
 
+	function renderYouTubePresets() {
+		if (!youtubeGrid) return;
+		youtubeGrid.innerHTML = "";
+
+		YOUTUBE_PRESETS.forEach(track => {
+			const card = document.createElement("div");
+			card.className = `yt-card ${state.youtubeVideoId === track.id ? "active" : ""}`;
+			card.dataset.id = track.id;
+
+			card.innerHTML = `
+				<img src="https://img.youtube.com/vi/${track.id}/hqdefault.jpg" alt="${track.title}" class="yt-card-thumb" loading="lazy" />
+				<div class="yt-card-info">
+					<div class="yt-card-title">${track.title}</div>
+					<div class="yt-card-subtitle">${track.subtitle}</div>
+				</div>
+			`;
+
+			card.addEventListener("click", () => {
+				state.youtubeVideoId = track.id;
+				state.youtubeUrl = track.url;
+				state.audioSource = "youtube-music";
+
+				// Update radio check
+				const ytRadio = document.querySelector('input[name="audio-source"][value="youtube-music"]');
+				if (ytRadio) ytRadio.checked = true;
+				if (youtubeContainer) youtubeContainer.classList.remove("hidden");
+
+				// Update active state in grid
+				document.querySelectorAll(".yt-card").forEach(c => c.classList.remove("active"));
+				card.classList.add("active");
+
+				if (state.isActive) {
+					audioEngine.startAudioForMode(state.mode);
+				}
+				modal.classList.remove("open");
+			});
+
+			youtubeGrid.appendChild(card);
+		});
+	}
+
+	renderYouTubePresets();
+
 	openBtn.addEventListener("click", () => {
 		modal.classList.add("open");
 		modal.setAttribute("aria-hidden", "false");
+		renderYouTubePresets();
 	});
 
 	closeBtn.addEventListener("click", () => {
@@ -48,6 +93,7 @@ export function initMusicModal(onTimerChanged) {
 			state.audioSource = e.target.value;
 			if (state.audioSource === "youtube-music") {
 				if (youtubeContainer) youtubeContainer.classList.remove("hidden");
+				renderYouTubePresets();
 			} else {
 				if (youtubeContainer) youtubeContainer.classList.add("hidden");
 			}
@@ -58,7 +104,7 @@ export function initMusicModal(onTimerChanged) {
 		});
 	});
 
-	// YouTube Music URL loader
+	// YouTube Music Custom URL loader
 	if (loadYoutubeBtn) {
 		loadYoutubeBtn.addEventListener("click", (e) => {
 			e.preventDefault();
@@ -72,6 +118,8 @@ export function initMusicModal(onTimerChanged) {
 				// Automatically check the YouTube Music radio option
 				const ytRadio = document.querySelector('input[name="audio-source"][value="youtube-music"]');
 				if (ytRadio) ytRadio.checked = true;
+
+				renderYouTubePresets();
 
 				if (state.isActive) {
 					audioEngine.startAudioForMode(state.mode);

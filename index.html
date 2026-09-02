@@ -347,7 +347,7 @@
 						<input type="radio" name="audio-source" value="youtube-music" />
 						<div class="radio-content">
 							<strong>YouTube Music Stream</strong>
-							<p>Stream your favorite ambient, classical, or meditation music directly from YouTube Music.</p>
+							<p>Stream curated meditation tracks or paste any custom YouTube Music video URL.</p>
 						</div>
 					</label>
 					<label class="radio-card">
@@ -359,10 +359,15 @@
 					</label>
 				</div>
 
-				<div id="youtube-url-container" class="form-group hidden">
-					<label for="youtube-audio-url">YouTube Music / Video URL</label>
-					<input type="url" id="youtube-audio-url" placeholder="Paste YouTube Music link (e.g. https://music.youtube.com/watch?v=...)" />
-					<button id="btn-load-youtube-url" class="secondary-btn" style="margin-top: 0.5rem;">Load YouTube Music Track</button>
+				<div id="youtube-url-container" class="form-group hidden" style="margin-top: 1rem;">
+					<label>Curated YouTube Music Meditation Tracks</label>
+					<div id="youtube-preset-grid" class="yt-grid"></div>
+
+					<label for="youtube-audio-url" style="margin-top: 0.8rem;">Or Paste Any Custom YouTube Link</label>
+					<div style="display: flex; gap: 0.5rem;">
+						<input type="url" id="youtube-audio-url" placeholder="https://music.youtube.com/watch?v=..." style="flex:1;" />
+						<button id="btn-load-youtube-url" class="secondary-btn">Load</button>
+					</div>
 				</div>
 
 				<hr class="modal-divider" />

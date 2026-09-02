@@ -4,6 +4,51 @@ let player = null;
 let isApiReady = false;
 let pendingVideoId = null;
 
+export const YOUTUBE_PRESETS = [
+	{
+		id: "3Zmk5G6h-qo",
+		url: "https://youtu.be/3Zmk5G6h-qo",
+		title: "Deep Ambient Flute & Tanpura",
+		subtitle: "Sacred Indian Bamboo Flute & Tanpura Drone"
+	},
+	{
+		id: "iYO8SH-maAc",
+		url: "https://youtu.be/iYO8SH-maAc",
+		title: "Sacred Om Chanting & Healing",
+		subtitle: "Deep Vibrational Om Resonance & Calm"
+	},
+	{
+		id: "Rmh7WcEomg4",
+		url: "https://youtu.be/Rmh7WcEomg4",
+		title: "Soothing Sitar & Gentle Breeze",
+		subtitle: "Traditional Indian Classical Sitar Harmony"
+	},
+	{
+		id: "5XSye4C6sP0",
+		url: "https://youtu.be/5XSye4C6sP0",
+		title: "528Hz Solfeggio & DNA Repair",
+		subtitle: "Miracle Frequency & Deep Mindful Healing"
+	},
+	{
+		id: "RieqLpDhKZg",
+		url: "https://www.youtube.com/watch?v=RieqLpDhKZg",
+		title: "Nature Rain & Ocean Shore",
+		subtitle: "Calming Mountain Rainfall & Ocean Waves"
+	},
+	{
+		id: "6KTnLxmfZWE",
+		url: "https://youtu.be/6KTnLxmfZWE",
+		title: "Cosmic Delta Wave & Theta Drift",
+		subtitle: "Deep Sleep & Unconscious Mind Tranquility"
+	},
+	{
+		id: "w9hqMyHZumU",
+		url: "https://youtu.be/w9hqMyHZumU",
+		title: "Zen Bamboo Flute & Stream",
+		subtitle: "Peaceful Garden Stream & Soft Breeze"
+	}
+];
+
 export function extractYouTubeId(url) {
 	if (!url) return null;
 	const trimmed = url.trim();
