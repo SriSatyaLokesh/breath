@@ -387,6 +387,15 @@ function bootstrap() {
 	buildCueText(initTh.cueStart);
 	updateSessionLabel();
 
+	// PWA Service Worker Registration
+	if ("serviceWorker" in navigator) {
+		window.addEventListener("load", () => {
+			navigator.serviceWorker.register("./sw.js")
+				.then((reg) => console.log("[Service Worker] Registered:", reg.scope))
+				.catch((err) => console.warn("[Service Worker] Reg failed:", err));
+		});
+	}
+
 	// Mobile scroll hint fade listener
 	const trk = document.getElementById("mode-track");
 	const hint = document.getElementById("scroll-hint-right");
