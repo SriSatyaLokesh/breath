@@ -1,12 +1,20 @@
-const CACHE_NAME = 'swaasa-pwa-v1';
+const CACHE_NAME = 'swaasa-pwa-v2';
 const ASSETS_TO_CACHE = [
 	'./',
 	'./index.html',
 	'./site.webmanifest',
+	'./favicon.ico',
 	'./icon.svg',
+	'./favicon-16x16.png',
 	'./favicon-32x32.png',
+	'./favicon-48x48.png',
+	'./pwa-64x64.png',
+	'./pwa-128x128.png',
+	'./apple-touch-icon-152x152.png',
 	'./apple-touch-icon.png',
 	'./pwa-192x192.png',
+	'./pwa-256x256.png',
+	'./pwa-384x384.png',
 	'./pwa-512x512.png',
 	'./maskable-icon-512x512.png',
 	'./robots.txt',
