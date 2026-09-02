@@ -2,14 +2,47 @@
   "name": "Swaasa Midha Dhyasa — Audio-Visual Mindfulness Sanctuary",
   "short_name": "Swaasa",
   "description": "Free open-source audio-visual mindfulness web app featuring science-backed breathing techniques, Indian Carnatic classical music, YouTube Music streaming, and customizable timers.",
+  "id": "/breath/",
   "start_url": "./index.html",
+  "scope": "./",
   "display": "standalone",
+  "display_override": ["standalone", "minimal-ui", "browser"],
+  "orientation": "any",
   "background_color": "#0e0904",
   "theme_color": "#e86026",
+  "categories": ["health", "lifestyle", "utilities"],
   "icons": [
     {
-      "src": "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512'%3E%3Crect width='512' height='512' fill='%230e0904'/%3E%3Ccircle cx='256' cy='256' r='180' fill='none' stroke='%23e86026' stroke-width='24'/%3E%3Ccircle cx='256' cy='256' r='110' fill='%23e86026' opacity='0.7'/%3E%3C/svg%3E",
+      "src": "favicon-32x32.png",
+      "sizes": "32x32",
+      "type": "image/png"
+    },
+    {
+      "src": "apple-touch-icon.png",
+      "sizes": "180x180",
+      "type": "image/png"
+    },
+    {
+      "src": "pwa-192x192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "pwa-512x512.png",
       "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "maskable-icon-512x512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "maskable"
+    },
+    {
+      "src": "icon.svg",
+      "sizes": "any",
       "type": "image/svg+xml",
       "purpose": "any maskable"
     }
