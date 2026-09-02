@@ -10,7 +10,6 @@ export function initMusicModal(onTimerChanged) {
 	const volumeSlider = document.getElementById("master-volume");
 	const volumeValLabel = document.getElementById("volume-val");
 	
-	const youtubeContainer = document.getElementById("youtube-url-container");
 	const youtubeGrid = document.getElementById("youtube-preset-grid");
 	const youtubeInput = document.getElementById("youtube-audio-url");
 	const loadYoutubeBtn = document.getElementById("btn-load-youtube-url");
@@ -24,7 +23,7 @@ export function initMusicModal(onTimerChanged) {
 
 		YOUTUBE_PRESETS.forEach(track => {
 			const card = document.createElement("div");
-			card.className = `yt-card ${state.youtubeVideoId === track.id ? "active" : ""}`;
+			card.className = `yt-card ${state.audioSource === "youtube-music" && state.youtubeVideoId === track.id ? "active" : ""}`;
 			card.dataset.id = track.id;
 
 			card.innerHTML = `
@@ -43,7 +42,6 @@ export function initMusicModal(onTimerChanged) {
 				// Update radio check
 				const ytRadio = document.querySelector('input[name="audio-source"][value="youtube-music"]');
 				if (ytRadio) ytRadio.checked = true;
-				if (youtubeContainer) youtubeContainer.classList.remove("hidden");
 
 				// Update active state in grid
 				document.querySelectorAll(".yt-card").forEach(c => c.classList.remove("active"));
@@ -91,12 +89,7 @@ export function initMusicModal(onTimerChanged) {
 	sourceRadios.forEach(radio => {
 		radio.addEventListener("change", (e) => {
 			state.audioSource = e.target.value;
-			if (state.audioSource === "youtube-music") {
-				if (youtubeContainer) youtubeContainer.classList.remove("hidden");
-				renderYouTubePresets();
-			} else {
-				if (youtubeContainer) youtubeContainer.classList.add("hidden");
-			}
+			renderYouTubePresets();
 
 			if (state.isActive) {
 				audioEngine.startAudioForMode(state.mode);

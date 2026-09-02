@@ -323,7 +323,7 @@
 		<div class="modal-card">
 			<button class="modal-close" id="music-modal-close" aria-label="Close Modal">&times;</button>
 			<h2 class="modal-title" id="music-modal-title">Audio & Session Timer</h2>
-			<p class="modal-subtitle">Customize procedural synthesis, YouTube Music streams, and session durations.</p>
+			<p class="modal-subtitle">Customize audio soundscapes, YouTube Music streams, and session duration timers.</p>
 
 			<div class="audio-controls-group">
 				<div class="control-row">
@@ -334,20 +334,35 @@
 
 				<hr class="modal-divider" />
 
-				<h3 class="builder-heading">Soundscape & Music Source</h3>
+				<!-- Featured YouTube Music Tracks Section -->
+				<h3 class="builder-heading">Featured YouTube Music Tracks</h3>
+				<p style="font-size: 0.68rem; color: rgba(255,255,255,0.5); margin-bottom: 0.8rem;">Select any curated track below to stream audio directly during your session.</p>
+				<div id="youtube-preset-grid" class="yt-grid"></div>
+
+				<div class="form-group" style="margin-top: 0.5rem;">
+					<label for="youtube-audio-url">Or Paste Any Custom YouTube Music Link</label>
+					<div style="display: flex; gap: 0.5rem;">
+						<input type="url" id="youtube-audio-url" placeholder="https://music.youtube.com/watch?v=..." style="flex:1;" />
+						<button id="btn-load-youtube-url" class="secondary-btn">Load Track</button>
+					</div>
+				</div>
+
+				<hr class="modal-divider" />
+
+				<h3 class="builder-heading">Audio Source Mode</h3>
 				<div class="source-selector">
 					<label class="radio-card">
-						<input type="radio" name="audio-source" value="procedural" checked />
+						<input type="radio" name="audio-source" value="youtube-music" checked />
 						<div class="radio-content">
-							<strong>Real-time Procedural Synthesis</strong>
-							<p>Endless, non-looping Web Audio soundscapes tailored to current space.</p>
+							<strong>YouTube Music Stream</strong>
+							<p>Stream selected YouTube Music track or custom link.</p>
 						</div>
 					</label>
 					<label class="radio-card">
-						<input type="radio" name="audio-source" value="youtube-music" />
+						<input type="radio" name="audio-source" value="procedural" />
 						<div class="radio-content">
-							<strong>YouTube Music Stream</strong>
-							<p>Stream curated meditation tracks or paste any custom YouTube Music video URL.</p>
+							<strong>Real-time Procedural Synthesis</strong>
+							<p>Endless, non-looping Web Audio soundscapes tailored to current space.</p>
 						</div>
 					</label>
 					<label class="radio-card">
@@ -357,17 +372,6 @@
 							<p>Authentic Carnatic Ragas (Mohanam, Hamsadhvani, Kalyani) with Veena, Flute & Tanpura.</p>
 						</div>
 					</label>
-				</div>
-
-				<div id="youtube-url-container" class="form-group hidden" style="margin-top: 1rem;">
-					<label>Curated YouTube Music Meditation Tracks</label>
-					<div id="youtube-preset-grid" class="yt-grid"></div>
-
-					<label for="youtube-audio-url" style="margin-top: 0.8rem;">Or Paste Any Custom YouTube Link</label>
-					<div style="display: flex; gap: 0.5rem;">
-						<input type="url" id="youtube-audio-url" placeholder="https://music.youtube.com/watch?v=..." style="flex:1;" />
-						<button id="btn-load-youtube-url" class="secondary-btn">Load</button>
-					</div>
 				</div>
 
 				<hr class="modal-divider" />
