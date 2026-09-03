@@ -572,7 +572,7 @@ body.active .tagline {
 
 .modal-card {
 	position: relative;
-	width: min(640px, 92vw);
+	width: min(680px, 94vw);
 	max-height: 85vh;
 	overflow-y: auto;
 	padding: 2.2rem;
@@ -619,8 +619,70 @@ body.active .tagline {
 	font-family: var(--font-ui);
 	font-size: 0.72rem;
 	color: rgba(255, 255, 255, 0.55);
-	margin-bottom: 1.4rem;
+	margin-bottom: 1.2rem;
 	letter-spacing: 0.04em;
+}
+
+/* Sanctuary Tab Navigation Bar inside Modal */
+.sanctuary-tab-bar {
+	display: flex;
+	gap: 0.45rem;
+	margin-bottom: 1.4rem;
+	border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+	padding-bottom: 0.7rem;
+	overflow-x: auto;
+	scrollbar-width: none;
+}
+
+.sanctuary-tab-bar::-webkit-scrollbar {
+	display: none;
+}
+
+.sanctuary-tab-btn {
+	padding: 0.55rem 1rem;
+	border-radius: 14px;
+	border: 1px solid rgba(255, 255, 255, 0.1);
+	background: rgba(255, 255, 255, 0.04);
+	color: rgba(255, 255, 255, 0.68);
+	font-family: var(--font-ui);
+	font-size: 0.72rem;
+	font-weight: 500;
+	letter-spacing: 0.04em;
+	cursor: none;
+	white-space: nowrap;
+	transition: all 0.3s ease;
+}
+
+.sanctuary-tab-btn:hover {
+	background: rgba(255, 255, 255, 0.08);
+	color: #fff;
+}
+
+.sanctuary-tab-btn.active {
+	background: var(--theme-accent);
+	border-color: var(--theme-accent);
+	color: #fff;
+	box-shadow: 0 4px 14px rgba(var(--theme-accent-rgb), 0.35);
+}
+
+.sanctuary-tab-content {
+	display: none;
+}
+
+.sanctuary-tab-content.active {
+	display: block;
+	animation: tabFadeIn 0.3s ease-out;
+}
+
+@keyframes tabFadeIn {
+	from {
+		opacity: 0;
+		transform: translateY(6px);
+	}
+	to {
+		opacity: 1;
+		transform: translateY(0);
+	}
 }
 
 .modal-divider {
@@ -1267,6 +1329,11 @@ input:checked + .slider:before {
 		font-size: 1.7rem;
 	}
 
+	.sanctuary-tab-btn {
+		padding: 0.45rem 0.75rem;
+		font-size: 0.64rem;
+	}
+
 	.pattern-grid {
 		grid-template-columns: 1fr;
 		gap: 0.7rem;
@@ -1286,15 +1353,15 @@ input:checked + .slider:before {
 /* Mobile Smartphones (<= 480px) */
 @media screen and (max-width: 480px) {
 	html, body {
-		cursor: auto; /* Standard touch cursor on mobile devices */
+		cursor: auto;
 	}
 
-	.mode-pill, .tool-btn, .pattern-card, .yt-card, .journey-card, .timer-pill, #breath-btn, .modal-close, .primary-btn, .secondary-btn {
+	.mode-pill, .tool-btn, .pattern-card, .yt-card, .journey-card, .timer-pill, #breath-btn, .modal-close, .primary-btn, .secondary-btn, .sanctuary-tab-btn {
 		cursor: pointer;
 	}
 
 	#dot, #ring {
-		display: none !important; /* Hide custom desktop cursor dot/ring on mobile touch screens */
+		display: none !important;
 	}
 
 	#mode-switcher {
@@ -1459,13 +1526,15 @@ body[data-theme="classical"] .journey-card-badge {
 	color: #a51c30 !important;
 }
 
-body[data-theme="classical"] .timer-pill {
+body[data-theme="classical"] .timer-pill,
+body[data-theme="classical"] .sanctuary-tab-btn {
 	background: rgba(255, 255, 255, 0.7) !important;
 	border: 1px solid rgba(165, 28, 48, 0.22) !important;
 	color: #501820 !important;
 }
 
-body[data-theme="classical"] .timer-pill.active {
+body[data-theme="classical"] .timer-pill.active,
+body[data-theme="classical"] .sanctuary-tab-btn.active {
 	background: #a51c30 !important;
 	border-color: #a51c30 !important;
 	color: #ffffff !important;

@@ -4,8 +4,7 @@ import { getActivePattern, setActivePattern, getDefaultPatternForMode } from "./
 import { initCanvas, renderFrame, spawnRipple } from "./visuals/canvas-renderer.js";
 import { audioEngine } from "./audio/audio-engine.js";
 import { haptics } from "./haptics.js";
-import { initBreathModal } from "./ui/breath-modal.js";
-import { initMusicModal } from "./ui/music-modal.js";
+import { initSanctuaryModal } from "./ui/sanctuary-modal.js";
 
 const cueN = {
 	inhale: "inhale slowly",
@@ -184,7 +183,7 @@ function applyTheme(m) {
 	document.querySelectorAll(".mode-pill").forEach((p) => {
 		const isAct = p.dataset.mode === m;
 		p.style.color = isAct ? th.pillActive : th.pillDim;
-		p.style.background = "transparent"; // Button background is transparent so #mode-thumb is the single sliding indicator
+		p.style.background = "transparent";
 		p.style.fontWeight = isAct ? "700" : "400";
 	});
 
@@ -313,7 +312,6 @@ function renderLoop(ts) {
 	if (state.isActive) {
 		state.timer += dt * 0.001;
 
-		// Session Duration Countdown Timer
 		if (state.sessionDuration > 0) {
 			state.sessionTimeRemaining -= dt * 0.001;
 			updateSessionLabel();
@@ -500,22 +498,17 @@ function bootstrap() {
 		if (e.code === "Space") {
 			e.preventDefault();
 			state.isActive ? stopSession() : startSession();
-		} else if (e.code === "KeyB") {
-			const btn = document.getElementById("btn-breath-modal");
-			if (btn) btn.click();
-		} else if (e.code === "KeyM") {
-			const btn = document.getElementById("btn-music-modal");
+		} else if (e.code === "KeyC" || e.code === "KeyS") {
+			const btn = document.getElementById("btn-sanctuary-modal");
 			if (btn) btn.click();
 		}
 	});
 
-	// Modals initialization
-	initBreathModal((newPattern) => {
-		updateSessionLabel();
-	});
-	initMusicModal((dur) => {
-		updateSessionLabel();
-	});
+	// Unified Sanctuary Controls Modal Initialization
+	initSanctuaryModal(
+		(newPattern) => updateSessionLabel(),
+		(dur) => updateSessionLabel()
+	);
 
 	setTimeout(() => {
 		const activePill = document.querySelector('.mode-pill[data-mode="breathe"]');

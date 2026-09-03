@@ -1,18 +1,22 @@
 import { state } from "../state.js";
 import { audioEngine } from "../audio/audio-engine.js";
 import { extractYouTubeId, YOUTUBE_PRESETS } from "../audio/youtube-player.js";
+import { getAllPatterns, saveCustomPattern, getActivePattern, setActivePattern } from "../breath-patterns.js";
 import { MINDFULNESS_JOURNEYS } from "../journeys.js";
-import { setActivePattern } from "../breath-patterns.js";
-import { T } from "../themes.js";
 
-export function initMusicModal(onTimerChanged) {
-	const modal = document.getElementById("music-modal");
-	const openBtn = document.getElementById("btn-music-modal");
-	const closeBtn = document.getElementById("music-modal-close");
+export function initSanctuaryModal(onPatternChanged, onTimerChanged) {
+	const modal = document.getElementById("sanctuary-modal");
+	const openBtn = document.getElementById("btn-sanctuary-modal");
+	const closeBtn = document.getElementById("sanctuary-modal-close");
+
+	const tabBtns = document.querySelectorAll(".sanctuary-tab-btn");
+	const tabContents = document.querySelectorAll(".sanctuary-tab-content");
+
+	const patternList = document.getElementById("pattern-list");
+	const customForm = document.getElementById("custom-breath-form");
 
 	const volumeSlider = document.getElementById("master-volume");
 	const volumeValLabel = document.getElementById("volume-val");
-	
 	const ambientSlider = document.getElementById("ambient-volume");
 	const ambientValLabel = document.getElementById("ambient-val");
 	const dualAudioToggle = document.getElementById("dual-audio-toggle");
@@ -21,9 +25,22 @@ export function initMusicModal(onTimerChanged) {
 	const youtubeGrid = document.getElementById("youtube-preset-grid");
 	const youtubeInput = document.getElementById("youtube-audio-url");
 	const loadYoutubeBtn = document.getElementById("btn-load-youtube-url");
-	
 	const chimeToggle = document.getElementById("guidance-chime");
 
+	// Tab Switcher
+	tabBtns.forEach(btn => {
+		btn.addEventListener("click", () => {
+			const targetTab = btn.dataset.tab;
+			tabBtns.forEach(b => b.classList.remove("active"));
+			tabContents.forEach(c => c.classList.remove("active"));
+
+			btn.classList.add("active");
+			const activeContent = document.getElementById(`tab-${targetTab}`);
+			if (activeContent) activeContent.classList.add("active");
+		});
+	});
+
+	// Timer Pills Sync
 	function syncTimerPills(currentDur) {
 		const pills = document.querySelectorAll(".timer-pill");
 		pills.forEach(pill => {
@@ -36,6 +53,37 @@ export function initMusicModal(onTimerChanged) {
 		});
 	}
 
+	// Render Breath Patterns
+	function renderBreathPatterns() {
+		if (!patternList) return;
+		patternList.innerHTML = "";
+		const activePat = getActivePattern();
+		const patterns = getAllPatterns();
+
+		patterns.forEach(pat => {
+			const card = document.createElement("div");
+			card.className = `pattern-card ${activePat.id === pat.id ? "active" : ""}`;
+			card.dataset.id = pat.id;
+
+			card.innerHTML = `
+				<div class="pattern-card-title">${pat.name}</div>
+				<div class="pattern-card-detail">${pat.detail}</div>
+				<div class="pattern-card-desc">${pat.description || pat.desc || ""}</div>
+			`;
+
+			card.addEventListener("click", () => {
+				setActivePattern(pat.id);
+				state.activePattern = pat;
+				renderBreathPatterns();
+				if (onPatternChanged) onPatternChanged(pat);
+				modal.classList.remove("open");
+			});
+
+			patternList.appendChild(card);
+		});
+	}
+
+	// Render Journeys
 	function renderJourneys() {
 		if (!journeysGrid) return;
 		journeysGrid.innerHTML = "";
@@ -51,17 +99,14 @@ export function initMusicModal(onTimerChanged) {
 			`;
 
 			card.addEventListener("click", () => {
-				// Apply Breath Pattern
 				setActivePattern(j.patternId);
 				state.activePattern = { id: j.patternId, name: j.title, detail: j.subtitle };
 
-				// Apply Duration
 				state.sessionDuration = j.duration;
 				state.sessionTimeRemaining = j.duration;
 				syncTimerPills(j.duration);
 				if (onTimerChanged) onTimerChanged(j.duration);
 
-				// Apply Space & Audio Mode
 				if (j.audioMode === "youtube-music" && j.youtubeUrl) {
 					const vid = extractYouTubeId(j.youtubeUrl);
 					if (vid) {
@@ -73,10 +118,10 @@ export function initMusicModal(onTimerChanged) {
 					state.audioSource = j.audioMode;
 				}
 
-				// Trigger Mode Switch Pill Click
 				const pillBtn = document.querySelector(`.mode-pill[data-mode="${j.spaceMode}"]`);
 				if (pillBtn) pillBtn.click();
 
+				renderBreathPatterns();
 				modal.classList.remove("open");
 			});
 
@@ -84,6 +129,7 @@ export function initMusicModal(onTimerChanged) {
 		});
 	}
 
+	// Render YouTube Presets
 	function renderYouTubePresets() {
 		if (!youtubeGrid) return;
 		youtubeGrid.innerHTML = "";
@@ -122,21 +168,28 @@ export function initMusicModal(onTimerChanged) {
 		});
 	}
 
+	renderBreathPatterns();
 	renderJourneys();
 	renderYouTubePresets();
 
-	openBtn.addEventListener("click", () => {
-		modal.classList.add("open");
-		modal.setAttribute("aria-hidden", "false");
-		renderJourneys();
-		renderYouTubePresets();
-		syncTimerPills(state.sessionDuration);
-	});
+	// Modal Open & Close Event Handlers
+	if (openBtn) {
+		openBtn.addEventListener("click", () => {
+			modal.classList.add("open");
+			modal.setAttribute("aria-hidden", "false");
+			renderBreathPatterns();
+			renderJourneys();
+			renderYouTubePresets();
+			syncTimerPills(state.sessionDuration);
+		});
+	}
 
-	closeBtn.addEventListener("click", () => {
-		modal.classList.remove("open");
-		modal.setAttribute("aria-hidden", "true");
-	});
+	if (closeBtn) {
+		closeBtn.addEventListener("click", () => {
+			modal.classList.remove("open");
+			modal.setAttribute("aria-hidden", "true");
+		});
+	}
 
 	modal.addEventListener("click", (e) => {
 		if (e.target === modal) {
@@ -144,6 +197,34 @@ export function initMusicModal(onTimerChanged) {
 			modal.setAttribute("aria-hidden", "true");
 		}
 	});
+
+	// Custom Breath Builder Form
+	if (customForm) {
+		customForm.addEventListener("submit", (e) => {
+			e.preventDefault();
+			const name = document.getElementById("custom-name").value.trim() || "Custom Pattern";
+			const inh = parseFloat(document.getElementById("custom-inhale").value) || 4;
+			const holdIn = parseFloat(document.getElementById("custom-hold-in").value) || 0;
+			const exh = parseFloat(document.getElementById("custom-exhale").value) || 4;
+			const holdOut = parseFloat(document.getElementById("custom-hold-out").value) || 0;
+			const doubleInhale = document.getElementById("custom-double-inhale").checked;
+
+			const savedPat = saveCustomPattern({
+				name,
+				inhale: inh,
+				holdIn,
+				exhale: exh,
+				holdOut,
+				doubleInhale
+			});
+
+			setActivePattern(savedPat.id);
+			state.activePattern = savedPat;
+			renderBreathPatterns();
+			if (onPatternChanged) onPatternChanged(savedPat);
+			modal.classList.remove("open");
+		});
+	}
 
 	// Master volume slider
 	if (volumeSlider) {
@@ -154,7 +235,7 @@ export function initMusicModal(onTimerChanged) {
 		});
 	}
 
-	// Ambient Layer Balance Volume Slider
+	// Ambient Layer Volume Slider
 	if (ambientSlider) {
 		ambientSlider.addEventListener("input", (e) => {
 			const val = parseFloat(e.target.value);
@@ -212,7 +293,7 @@ export function initMusicModal(onTimerChanged) {
 		});
 	}
 
-	// Interactive Session Duration Timer Pills
+	// Session Duration Timer Pills
 	const timerPills = document.querySelectorAll(".timer-pill");
 	timerPills.forEach(pill => {
 		pill.addEventListener("click", () => {
