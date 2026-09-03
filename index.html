@@ -331,13 +331,27 @@
 		<div class="modal-card">
 			<button class="modal-close" id="music-modal-close" aria-label="Close Modal">&times;</button>
 			<h2 class="modal-title" id="music-modal-title">Audio & Session Timer</h2>
-			<p class="modal-subtitle">Customize audio soundscapes, YouTube Music streams, and session duration timers.</p>
+			<p class="modal-subtitle">Customize audio soundscapes, YouTube Music streams, guided journeys, and timers.</p>
 
 			<div class="audio-controls-group">
 				<div class="control-row">
 					<label for="master-volume">Master Volume</label>
 					<input type="range" id="master-volume" min="0" max="1" step="0.01" value="0.7" />
 					<span id="volume-val">70%</span>
+				</div>
+
+				<div class="control-row" style="margin-top: 0.6rem;">
+					<label for="ambient-volume">Ambient Balance</label>
+					<input type="range" id="ambient-volume" min="0" max="1" step="0.01" value="0.5" />
+					<span id="ambient-val">50%</span>
+				</div>
+
+				<div class="form-group checkbox-group" style="margin-top: 0.8rem;">
+					<label class="toggle-switch">
+						<input type="checkbox" id="dual-audio-toggle" />
+						<span class="slider"></span>
+					</label>
+					<span class="toggle-label">Enable Dual-Engine Layering (YouTube Music + Procedural Ambient)</span>
 				</div>
 
 				<hr class="modal-divider" />
@@ -381,6 +395,13 @@
 						</div>
 					</label>
 				</div>
+
+				<hr class="modal-divider" />
+
+				<!-- Curated Guided Journeys Section (Positioned Below Audio Files & Modes) -->
+				<h3 class="builder-heading">Curated Mindfulness Journeys</h3>
+				<p style="font-size: 0.68rem; color: rgba(255,255,255,0.5); margin-bottom: 0.8rem;">Select a structured program to automatically configure breath rhythm, duration, and audio soundscape.</p>
+				<div id="journeys-preset-grid" class="journeys-grid"></div>
 
 				<hr class="modal-divider" />
 

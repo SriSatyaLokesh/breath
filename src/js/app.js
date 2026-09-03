@@ -3,6 +3,7 @@ import { T, AFFIRMATIONS } from "./themes.js";
 import { getActivePattern, setActivePattern, getDefaultPatternForMode } from "./breath-patterns.js";
 import { initCanvas, renderFrame, spawnRipple } from "./visuals/canvas-renderer.js";
 import { audioEngine } from "./audio/audio-engine.js";
+import { haptics } from "./haptics.js";
 import { initBreathModal } from "./ui/breath-modal.js";
 import { initMusicModal } from "./ui/music-modal.js";
 
@@ -247,6 +248,7 @@ function startSession() {
 	if (ir2) ir2.style.animation = "none";
 
 	audioEngine.startAudioForMode(state.mode);
+	haptics.triggerPhaseChange();
 
 	if (state.mode === "anxiety") startAff();
 }
@@ -345,9 +347,11 @@ function renderLoop(ts) {
 
 			const nextPh = phs[state.phase];
 			buildCueText(cueN[nextPh.n] || "hold gently");
+			haptics.triggerPhaseChange();
 		}
 
 		audioEngine.updateBreathWave(state.bs, phs[state.phase].n);
+		haptics.triggerPhaseHaptic(phs[state.phase].n, state.bs);
 	} else {
 		state.bs = (0.5 + 0.5 * Math.sin(ts * 0.00068)) * 0.3;
 	}
