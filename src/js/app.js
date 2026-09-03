@@ -3,8 +3,8 @@ import { T, AFFIRMATIONS } from "./themes.js";
 import { getActivePattern, setActivePattern, getDefaultPatternForMode } from "./breath-patterns.js";
 import { initCanvas, renderFrame, spawnRipple } from "./visuals/canvas-renderer.js";
 import { audioEngine } from "./audio/audio-engine.js";
-import { initBreathModal } from "./ui/breath-modal.js";
-import { initMusicModal } from "./ui/music-modal.js";
+import { haptics } from "./haptics.js";
+import { initSanctuaryModal } from "./ui/sanctuary-modal.js";
 
 const cueN = {
 	inhale: "inhale slowly",
@@ -183,7 +183,7 @@ function applyTheme(m) {
 	document.querySelectorAll(".mode-pill").forEach((p) => {
 		const isAct = p.dataset.mode === m;
 		p.style.color = isAct ? th.pillActive : th.pillDim;
-		p.style.background = "transparent"; // Button background is transparent so #mode-thumb is the single sliding indicator
+		p.style.background = "transparent";
 		p.style.fontWeight = isAct ? "700" : "400";
 	});
 
@@ -247,6 +247,7 @@ function startSession() {
 	if (ir2) ir2.style.animation = "none";
 
 	audioEngine.startAudioForMode(state.mode);
+	haptics.triggerPhaseChange();
 
 	if (state.mode === "anxiety") startAff();
 }
@@ -311,7 +312,6 @@ function renderLoop(ts) {
 	if (state.isActive) {
 		state.timer += dt * 0.001;
 
-		// Session Duration Countdown Timer
 		if (state.sessionDuration > 0) {
 			state.sessionTimeRemaining -= dt * 0.001;
 			updateSessionLabel();
@@ -345,9 +345,11 @@ function renderLoop(ts) {
 
 			const nextPh = phs[state.phase];
 			buildCueText(cueN[nextPh.n] || "hold gently");
+			haptics.triggerPhaseChange();
 		}
 
 		audioEngine.updateBreathWave(state.bs, phs[state.phase].n);
+		haptics.triggerPhaseHaptic(phs[state.phase].n, state.bs);
 	} else {
 		state.bs = (0.5 + 0.5 * Math.sin(ts * 0.00068)) * 0.3;
 	}
@@ -496,22 +498,17 @@ function bootstrap() {
 		if (e.code === "Space") {
 			e.preventDefault();
 			state.isActive ? stopSession() : startSession();
-		} else if (e.code === "KeyB") {
-			const btn = document.getElementById("btn-breath-modal");
-			if (btn) btn.click();
-		} else if (e.code === "KeyM") {
-			const btn = document.getElementById("btn-music-modal");
+		} else if (e.code === "KeyC" || e.code === "KeyS") {
+			const btn = document.getElementById("btn-sanctuary-modal");
 			if (btn) btn.click();
 		}
 	});
 
-	// Modals initialization
-	initBreathModal((newPattern) => {
-		updateSessionLabel();
-	});
-	initMusicModal((dur) => {
-		updateSessionLabel();
-	});
+	// Unified Sanctuary Controls Modal Initialization
+	initSanctuaryModal(
+		(newPattern) => updateSessionLabel(),
+		(dur) => updateSessionLabel()
+	);
 
 	setTimeout(() => {
 		const activePill = document.querySelector('.mode-pill[data-mode="breathe"]');

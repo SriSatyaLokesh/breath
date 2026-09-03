@@ -46,7 +46,7 @@
 	<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700&family=Cormorant+Garamond:ital,wght@0,300;1,300&family=DM+Mono:wght@300;400&family=Instrument+Serif:ital@0;1&family=Tenor+Sans&display=swap" rel="stylesheet">
 	<link rel="stylesheet" href="/src/styles/main.css" />
 
-	<!-- JSON-LD Structured Data: WebApplication Schema (GEO / SEO) -->
+	<!-- JSON-LD Structured Data: WebApplication Schema -->
 	<script type="application/ld+json">
 	{
 		"@context": "https://schema.org",
@@ -75,96 +75,6 @@
 			"YouTube Music & Video Stream Integration",
 			"Natural Pulmonary Airflow Breathing Guidance",
 			"Customizable Session Duration Timers"
-		]
-	}
-	</script>
-
-	<!-- JSON-LD Structured Data: FAQPage Schema (AEO / Voice Search) -->
-	<script type="application/ld+json">
-	{
-		"@context": "https://schema.org",
-		"@type": "FAQPage",
-		"mainEntity": [
-			{
-				"@type": "Question",
-				"name": "What is Swaasa Midha Dhyasa?",
-				"acceptedAnswer": {
-					"@type": "Answer",
-					"text": "Swaasa Midha Dhyasa (Telugu/Sanskrit for 'Mindfulness and Focus on the Breath') is a free, open-source audio-visual web application designed for guided breathing exercises, deep meditation, anxiety relief, and inner calm."
-				}
-			},
-			{
-				"@type": "Question",
-				"name": "How does Box Breathing work and what are its benefits?",
-				"acceptedAnswer": {
-					"@type": "Answer",
-					"text": "Box Breathing (4-4-4-4 pattern: 4s Inhale, 4s Hold, 4s Exhale, 4s Hold) is an equalized breathing technique used by Navy SEALs and athletes to quickly lower stress, regulate the autonomic nervous system, and restore mental focus."
-				}
-			},
-			{
-				"@type": "Question",
-				"name": "What is the Physiological Sigh for anxiety relief?",
-				"acceptedAnswer": {
-					"@type": "Answer",
-					"text": "The Physiological Sigh is a Stanford Neurobiology breathing pattern consisting of two quick inhales followed by one long, slow exhale (2s double-inhale, 1s hold, 4s exhale). It rapidly offloads carbon dioxide (CO2) from the lungs and triggers parasympathetic calm within seconds."
-				}
-			},
-			{
-				"@type": "Question",
-				"name": "How does 4-7-8 breathing help with sleep and meditation?",
-				"acceptedAnswer": {
-					"@type": "Answer",
-					"text": "The 4-7-8 breathing technique (4s Inhale, 7s Hold, 8s Exhale) acts as a natural tranquilizer for the nervous system by extending the exhale, slowing the heart rate, and shifting the brain into relaxing theta frequencies."
-				}
-			},
-			{
-				"@type": "Question",
-				"name": "What is Indian Carnatic Classical Raga Meditation in Swaasa Midha Dhyasa?",
-				"acceptedAnswer": {
-					"@type": "Answer",
-					"text": "In Swaasa Midha Dhyasa's Classical Space, real-time procedural Web Audio synthesizes sacred Tanpura Shruti Box drones (Sa-Pa-Sa') along with Carnatic Raga Swara melodies (Raga Mohanam, Hamsadhvani, and Kalyani) featuring microtonal Gamaka pitch slides."
-				}
-			},
-			{
-				"@type": "Question",
-				"name": "Can I stream YouTube Music during my breathing session?",
-				"acceptedAnswer": {
-					"@type": "Answer",
-					"text": "Yes! In the Audio & Timer modal, select 'YouTube Music Stream', paste any YouTube Music or YouTube video URL, and play your favorite ambient or classical tracks in the background while breathing."
-				}
-			}
-		]
-	}
-	</script>
-
-	<!-- JSON-LD Structured Data: HowTo Schema (Search Snippets) -->
-	<script type="application/ld+json">
-	{
-		"@context": "https://schema.org",
-		"@type": "HowTo",
-		"name": "How to Perform Box Breathing for Stress & Focus",
-		"description": "Step-by-step guide to practicing 4-4-4-4 Box Breathing on Swaasa Midha Dhyasa.",
-		"step": [
-			{
-				"@type": "HowToStep",
-				"name": "Step 1: Inhale Slowly",
-				"text": "Inhale deeply through your nose for 4 seconds as the light expands."
-			},
-			{
-				"@type": "HowToStep",
-				"name": "Step 2: Hold Breath",
-				"text": "Hold your breath gently for 4 seconds in stillness."
-			},
-			{
-				"@type": "HowToStep",
-				"name": "Step 3: Exhale Fully",
-				"text": "Release your breath smoothly through your mouth for 4 seconds."
-			},
-			{
-				"@type": "HowToStep",
-				"name": "Step 4: Hold Out",
-				"text": "Pause empty for 4 seconds before beginning the next cycle."
-			}
 		]
 	}
 	</script>
@@ -218,23 +128,14 @@
 		</div>
 	</main>
 
-	<!-- Floating Tool Controls -->
+	<!-- Unified Single Floating Tool Control -->
 	<aside id="tool-bar" aria-label="Mindfulness Controls">
-		<button id="btn-breath-modal" class="tool-btn" title="Breath Methods & Custom Builder" aria-label="Open Breath Methods Modal">
+		<button id="btn-sanctuary-modal" class="tool-btn" title="Sanctuary Controls" aria-label="Open Sanctuary Controls Modal">
 			<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-				<circle cx="12" cy="12" r="10"></circle>
-				<path d="M12 6v12M6 12h12"></path>
+				<circle cx="12" cy="12" r="3"></circle>
+				<path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path>
 			</svg>
-			<span>Breath Pattern</span>
-		</button>
-
-		<button id="btn-music-modal" class="tool-btn" title="Curated Soundscapes, YouTube Music & Timer" aria-label="Open Soundscape & Timer Modal">
-			<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-				<path d="M9 18V5l12-2v13"></path>
-				<circle cx="6" cy="18" r="3"></circle>
-				<circle cx="18" cy="16" r="3"></circle>
-			</svg>
-			<span>Audio & Timer</span>
+			<span>Sanctuary Controls</span>
 		</button>
 	</aside>
 
@@ -253,138 +154,147 @@
 		<div id="track-name"></div>
 	</footer>
 
-	<!-- SEO / GEO / AEO Hidden Knowledge Section for Search Engines & Generative AI Agents -->
-	<section id="seo-knowledge-base" class="hidden-seo-content" style="display:none;" aria-hidden="true">
-		<h2>About Swaasa Midha Dhyasa · Audio-Visual Mindfulness Sanctuary</h2>
-		<p>Swaasa Midha Dhyasa is a web-based mindfulness sanctuary offering science-backed breathing techniques, Web Audio ambient soundscapes, Indian Carnatic classical music, YouTube Music streaming, and session duration timers.</p>
-		
-		<h3>Science-Backed Breathing Techniques</h3>
-		<article>
-			<h4>Box Breathing (4-4-4-4)</h4>
-			<p>Equalized breathing rhythm utilized by tactical units and high-performance individuals to reset the nervous system, balance oxygen levels, and heighten mental clarity.</p>
-		</article>
-		<article>
-			<h4>4-7-8 Breathing Technique</h4>
-			<p>A natural relaxation exercise that extends exhalation to activate parasympathetic dominance, lower heart rate, and assist in falling asleep.</p>
-		</article>
-		<article>
-			<h4>Physiological Sigh (2-1-4 Double Inhale)</h4>
-			<p>Stanford neurobiology breathing protocol designed to immediately collapse alveoli strain, rapidly clear carbon dioxide, and neutralize acute anxiety.</p>
-		</article>
-		<article>
-			<h4>Indian Carnatic Classical Raga Soundscapes</h4>
-			<p>Procedural Web Audio synthesis of sacred Tanpura Shruti Box drones (Sa-Pa-Sa') combined with Carnatic Ragas (Mohanam, Hamsadhvani, Kalyani) and expressive microtonal Gamaka pitch slides on Veena and Bamboo Flute.</p>
-		</article>
-	</section>
-
-	<!-- MODAL: Custom Breath Patterns -->
-	<div id="breath-modal" class="modal-backdrop" aria-hidden="true" role="dialog" aria-labelledby="breath-modal-title">
+	<!-- UNIFIED SANCTUARY CONTROLS MODAL -->
+	<div id="sanctuary-modal" class="modal-backdrop" aria-hidden="true" role="dialog" aria-labelledby="sanctuary-modal-title">
 		<div class="modal-card">
-			<button class="modal-close" id="breath-modal-close" aria-label="Close Modal">&times;</button>
-			<h2 class="modal-title" id="breath-modal-title">Breathing Methods</h2>
-			<p class="modal-subtitle">Select a science-backed technique or craft your custom rhythm.</p>
+			<button class="modal-close" id="sanctuary-modal-close" aria-label="Close Modal">&times;</button>
+			<h2 class="modal-title" id="sanctuary-modal-title">Sanctuary Controls</h2>
+			<p class="modal-subtitle">One-stop control hub for breath techniques, soundscapes, journeys, and duration timers.</p>
 
-			<div id="pattern-list" class="pattern-grid"></div>
+			<!-- Sanctuary Tab Navigation Bar -->
+			<div class="sanctuary-tab-bar" role="tablist">
+				<button class="sanctuary-tab-btn active" data-tab="breath" role="tab" aria-selected="true">🫁 Breath Rhythms</button>
+				<button class="sanctuary-tab-btn" data-tab="audio" role="tab" aria-selected="false">🎵 Soundscapes</button>
+				<button class="sanctuary-tab-btn" data-tab="journeys" role="tab" aria-selected="false">🗓️ Journeys</button>
+				<button class="sanctuary-tab-btn" data-tab="timer" role="tab" aria-selected="false">⏱️ Duration Timer</button>
+			</div>
 
-			<hr class="modal-divider" />
-
-			<h3 class="builder-heading">Custom Breath Builder</h3>
-			<form id="custom-breath-form">
-				<div class="form-group">
-					<label for="custom-name">Pattern Name</label>
-					<input type="text" id="custom-name" placeholder="e.g. Deeper Calm" required maxlength="28" />
-				</div>
-				<div class="timing-grid">
-					<div class="form-group">
-						<label for="custom-inhale">Inhale (sec)</label>
-						<input type="number" id="custom-inhale" min="1" max="20" step="0.5" value="4" required />
-					</div>
-					<div class="form-group">
-						<label for="custom-hold-in">Hold (sec)</label>
-						<input type="number" id="custom-hold-in" min="0" max="20" step="0.5" value="4" required />
-					</div>
-					<div class="form-group">
-						<label for="custom-exhale">Exhale (sec)</label>
-						<input type="number" id="custom-exhale" min="1" max="20" step="0.5" value="4" required />
-					</div>
-					<div class="form-group">
-						<label for="custom-hold-out">Hold (sec)</label>
-						<input type="number" id="custom-hold-out" min="0" max="20" step="0.5" value="4" required />
-					</div>
-				</div>
-				<div class="form-group checkbox-group">
-					<label class="toggle-switch">
-						<input type="checkbox" id="custom-double-inhale" />
-						<span class="slider"></span>
-					</label>
-					<span class="toggle-label">Enable Double-Inhale (Physiological Sigh)</span>
-				</div>
-				<div class="modal-actions">
-					<button type="submit" class="primary-btn">Save & Apply Pattern</button>
-				</div>
-			</form>
-		</div>
-	</div>
-
-	<!-- MODAL: Soundscape, YouTube Music & Timer Manager -->
-	<div id="music-modal" class="modal-backdrop" aria-hidden="true" role="dialog" aria-labelledby="music-modal-title">
-		<div class="modal-card">
-			<button class="modal-close" id="music-modal-close" aria-label="Close Modal">&times;</button>
-			<h2 class="modal-title" id="music-modal-title">Audio & Session Timer</h2>
-			<p class="modal-subtitle">Customize audio soundscapes, YouTube Music streams, and session duration timers.</p>
-
-			<div class="audio-controls-group">
-				<div class="control-row">
-					<label for="master-volume">Master Volume</label>
-					<input type="range" id="master-volume" min="0" max="1" step="0.01" value="0.7" />
-					<span id="volume-val">70%</span>
-				</div>
-
+			<!-- TAB 1: BREATH RHYTHMS & CUSTOM BUILDER -->
+			<div id="tab-breath" class="sanctuary-tab-content active" role="tabpanel">
+				<div id="pattern-list" class="pattern-grid"></div>
 				<hr class="modal-divider" />
+				<h3 class="builder-heading">Custom Breath Builder</h3>
+				<form id="custom-breath-form">
+					<div class="form-group">
+						<label for="custom-name">Pattern Name</label>
+						<input type="text" id="custom-name" placeholder="e.g. Deeper Calm" required maxlength="28" />
+					</div>
+					<div class="timing-grid">
+						<div class="form-group">
+							<label for="custom-inhale">Inhale (sec)</label>
+							<input type="number" id="custom-inhale" min="1" max="20" step="0.5" value="4" required />
+						</div>
+						<div class="form-group">
+							<label for="custom-hold-in">Hold (sec)</label>
+							<input type="number" id="custom-hold-in" min="0" max="20" step="0.5" value="4" required />
+						</div>
+						<div class="form-group">
+							<label for="custom-exhale">Exhale (sec)</label>
+							<input type="number" id="custom-exhale" min="1" max="20" step="0.5" value="4" required />
+						</div>
+						<div class="form-group">
+							<label for="custom-hold-out">Hold (sec)</label>
+							<input type="number" id="custom-hold-out" min="0" max="20" step="0.5" value="4" required />
+						</div>
+					</div>
+					<div class="form-group checkbox-group">
+						<label class="toggle-switch">
+							<input type="checkbox" id="custom-double-inhale" />
+							<span class="slider"></span>
+						</label>
+						<span class="toggle-label">Enable Double-Inhale (Physiological Sigh)</span>
+					</div>
+					<div class="modal-actions">
+						<button type="submit" class="primary-btn">Save & Apply Pattern</button>
+					</div>
+				</form>
+			</div>
 
-				<!-- Featured YouTube Music Tracks Section -->
-				<h3 class="builder-heading">Featured YouTube Music Tracks</h3>
-				<p style="font-size: 0.68rem; color: rgba(255,255,255,0.5); margin-bottom: 0.8rem;">Select any curated track below to stream audio directly during your session.</p>
-				<div id="youtube-preset-grid" class="yt-grid"></div>
+			<!-- TAB 2: SOUNDSCAPES & AUDIO MIXER -->
+			<div id="tab-audio" class="sanctuary-tab-content" role="tabpanel">
+				<div class="audio-controls-group">
+					<div class="control-row">
+						<label for="master-volume">Master Volume</label>
+						<input type="range" id="master-volume" min="0" max="1" step="0.01" value="0.7" />
+						<span id="volume-val">70%</span>
+					</div>
 
-				<div class="form-group" style="margin-top: 0.5rem;">
-					<label for="youtube-audio-url">Or Paste Any Custom YouTube Music Link</label>
-					<div style="display: flex; gap: 0.5rem;">
-						<input type="url" id="youtube-audio-url" placeholder="https://music.youtube.com/watch?v=..." style="flex:1;" />
-						<button id="btn-load-youtube-url" class="secondary-btn">Load Track</button>
+					<div class="control-row" style="margin-top: 0.6rem;">
+						<label for="ambient-volume">Ambient Balance</label>
+						<input type="range" id="ambient-volume" min="0" max="1" step="0.01" value="0.5" />
+						<span id="ambient-val">50%</span>
+					</div>
+
+					<div class="form-group checkbox-group" style="margin-top: 0.8rem;">
+						<label class="toggle-switch">
+							<input type="checkbox" id="dual-audio-toggle" />
+							<span class="slider"></span>
+						</label>
+						<span class="toggle-label">Enable Dual-Engine Layering (YouTube Music + Procedural Ambient)</span>
+					</div>
+
+					<hr class="modal-divider" />
+
+					<h3 class="builder-heading">Featured YouTube Music Tracks</h3>
+					<p style="font-size: 0.68rem; color: rgba(255,255,255,0.5); margin-bottom: 0.8rem;">Select any curated track below to stream audio directly during your session.</p>
+					<div id="youtube-preset-grid" class="yt-grid"></div>
+
+					<div class="form-group" style="margin-top: 0.5rem;">
+						<label for="youtube-audio-url">Or Paste Any Custom YouTube Music Link</label>
+						<div style="display: flex; gap: 0.5rem;">
+							<input type="url" id="youtube-audio-url" placeholder="https://music.youtube.com/watch?v=..." style="flex:1;" />
+							<button id="btn-load-youtube-url" class="secondary-btn">Load Track</button>
+						</div>
+					</div>
+
+					<hr class="modal-divider" />
+
+					<h3 class="builder-heading">Audio Source Mode</h3>
+					<div class="source-selector">
+						<label class="radio-card">
+							<input type="radio" name="audio-source" value="youtube-music" checked />
+							<div class="radio-content">
+								<strong>YouTube Music Stream</strong>
+								<p>Stream selected YouTube Music track or custom link.</p>
+							</div>
+						</label>
+						<label class="radio-card">
+							<input type="radio" name="audio-source" value="procedural" />
+							<div class="radio-content">
+								<strong>Real-time Procedural Synthesis</strong>
+								<p>Endless, non-looping Web Audio soundscapes tailored to current space.</p>
+							</div>
+						</label>
+						<label class="radio-card">
+							<input type="radio" name="audio-source" value="classical-stream" />
+							<div class="radio-content">
+								<strong>Indian Carnatic Classical Masterpieces</strong>
+								<p>Authentic Carnatic Ragas (Mohanam, Hamsadhvani, Kalyani) with Veena, Flute & Tanpura.</p>
+							</div>
+						</label>
+					</div>
+
+					<hr class="modal-divider" />
+
+					<div class="form-group checkbox-group">
+						<label class="toggle-switch">
+							<input type="checkbox" id="guidance-chime" checked />
+							<span class="slider"></span>
+						</label>
+						<span class="toggle-label">Natural Breath Air Guidance</span>
 					</div>
 				</div>
+			</div>
 
-				<hr class="modal-divider" />
+			<!-- TAB 3: MINDFULNESS JOURNEYS -->
+			<div id="tab-journeys" class="sanctuary-tab-content" role="tabpanel">
+				<h3 class="builder-heading">Curated Mindfulness Journeys</h3>
+				<p style="font-size: 0.68rem; color: rgba(255,255,255,0.5); margin-bottom: 0.8rem;">Select a structured program to automatically configure breath rhythm, duration, and audio soundscape.</p>
+				<div id="journeys-preset-grid" class="journeys-grid"></div>
+			</div>
 
-				<h3 class="builder-heading">Audio Source Mode</h3>
-				<div class="source-selector">
-					<label class="radio-card">
-						<input type="radio" name="audio-source" value="youtube-music" checked />
-						<div class="radio-content">
-							<strong>YouTube Music Stream</strong>
-							<p>Stream selected YouTube Music track or custom link.</p>
-						</div>
-					</label>
-					<label class="radio-card">
-						<input type="radio" name="audio-source" value="procedural" />
-						<div class="radio-content">
-							<strong>Real-time Procedural Synthesis</strong>
-							<p>Endless, non-looping Web Audio soundscapes tailored to current space.</p>
-						</div>
-					</label>
-					<label class="radio-card">
-						<input type="radio" name="audio-source" value="classical-stream" />
-						<div class="radio-content">
-							<strong>Indian Carnatic Classical Masterpieces</strong>
-							<p>Authentic Carnatic Ragas (Mohanam, Hamsadhvani, Kalyani) with Veena, Flute & Tanpura.</p>
-						</div>
-					</label>
-				</div>
-
-				<hr class="modal-divider" />
-
-				<!-- Custom Luxury Duration Pill Selector -->
+			<!-- TAB 4: SESSION DURATION TIMER -->
+			<div id="tab-timer" class="sanctuary-tab-content" role="tabpanel">
 				<h3 class="builder-heading">Session Duration Timer</h3>
 				<div class="timer-selector-container">
 					<label style="font-family: var(--font-ui); font-size: 0.64rem; letter-spacing: 0.1em; text-transform: uppercase; color: rgba(255,255,255,0.6); margin-bottom: 0.6rem; display: block;">Target Mindfulness Duration</label>
@@ -398,16 +308,6 @@
 						<button type="button" class="timer-pill" data-value="1200">20 Mins</button>
 						<button type="button" class="timer-pill" data-value="1800">30 Mins</button>
 					</div>
-				</div>
-
-				<hr class="modal-divider" />
-
-				<div class="form-group checkbox-group">
-					<label class="toggle-switch">
-						<input type="checkbox" id="guidance-chime" checked />
-						<span class="slider"></span>
-					</label>
-					<span class="toggle-label">Natural Breath Air Guidance</span>
 				</div>
 			</div>
 		</div>

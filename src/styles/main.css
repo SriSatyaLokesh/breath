@@ -572,7 +572,7 @@ body.active .tagline {
 
 .modal-card {
 	position: relative;
-	width: min(640px, 92vw);
+	width: min(680px, 94vw);
 	max-height: 85vh;
 	overflow-y: auto;
 	padding: 2.2rem;
@@ -619,14 +619,142 @@ body.active .tagline {
 	font-family: var(--font-ui);
 	font-size: 0.72rem;
 	color: rgba(255, 255, 255, 0.55);
-	margin-bottom: 1.4rem;
+	margin-bottom: 1.2rem;
 	letter-spacing: 0.04em;
+}
+
+/* Sanctuary Tab Navigation Bar inside Modal */
+.sanctuary-tab-bar {
+	display: flex;
+	gap: 0.45rem;
+	margin-bottom: 1.4rem;
+	border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+	padding-bottom: 0.7rem;
+	overflow-x: auto;
+	scrollbar-width: none;
+}
+
+.sanctuary-tab-bar::-webkit-scrollbar {
+	display: none;
+}
+
+.sanctuary-tab-btn {
+	padding: 0.55rem 1rem;
+	border-radius: 14px;
+	border: 1px solid rgba(255, 255, 255, 0.1);
+	background: rgba(255, 255, 255, 0.04);
+	color: rgba(255, 255, 255, 0.68);
+	font-family: var(--font-ui);
+	font-size: 0.72rem;
+	font-weight: 500;
+	letter-spacing: 0.04em;
+	cursor: none;
+	white-space: nowrap;
+	transition: all 0.3s ease;
+}
+
+.sanctuary-tab-btn:hover {
+	background: rgba(255, 255, 255, 0.08);
+	color: #fff;
+}
+
+.sanctuary-tab-btn.active {
+	background: var(--theme-accent);
+	border-color: var(--theme-accent);
+	color: #fff;
+	box-shadow: 0 4px 14px rgba(var(--theme-accent-rgb), 0.35);
+}
+
+.sanctuary-tab-content {
+	display: none;
+}
+
+.sanctuary-tab-content.active {
+	display: block;
+	animation: tabFadeIn 0.3s ease-out;
+}
+
+@keyframes tabFadeIn {
+	from {
+		opacity: 0;
+		transform: translateY(6px);
+	}
+	to {
+		opacity: 1;
+		transform: translateY(0);
+	}
 }
 
 .modal-divider {
 	border: none;
 	border-top: 1px solid rgba(255, 255, 255, 0.1);
 	margin: 1.5rem 0;
+}
+
+/* Curated Mindfulness Journeys Grid */
+.journeys-grid {
+	display: grid;
+	grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+	gap: 0.85rem;
+	margin-top: 0.6rem;
+	margin-bottom: 1.2rem;
+}
+
+.journey-card {
+	position: relative;
+	padding: 1.1rem 1.2rem;
+	border-radius: 16px;
+	border: 1px solid rgba(255, 255, 255, 0.12);
+	background: rgba(255, 255, 255, 0.04);
+	cursor: none;
+	transition: all 0.35s ease;
+	display: flex;
+	flex-direction: column;
+}
+
+.journey-card:hover {
+	background: rgba(var(--theme-accent-rgb), 0.12);
+	border-color: var(--theme-accent);
+	transform: translateY(-2px);
+}
+
+.journey-card-badge {
+	position: absolute;
+	top: 0.8rem;
+	right: 0.9rem;
+	padding: 0.2rem 0.6rem;
+	border-radius: 10px;
+	background: rgba(var(--theme-accent-rgb), 0.25);
+	color: var(--theme-accent);
+	font-family: var(--font-mono);
+	font-size: 0.55rem;
+	letter-spacing: 0.14em;
+	text-transform: uppercase;
+}
+
+.journey-card-title {
+	font-family: var(--font-display);
+	font-size: 1.35rem;
+	font-style: italic;
+	font-weight: 400;
+	color: #fff;
+	margin-bottom: 0.2rem;
+}
+
+.journey-card-subtitle {
+	font-family: var(--font-mono);
+	font-size: 0.62rem;
+	letter-spacing: 0.12em;
+	color: rgba(255, 255, 255, 0.65);
+	text-transform: uppercase;
+	margin-bottom: 0.5rem;
+}
+
+.journey-card-desc {
+	font-family: var(--font-ui);
+	font-size: 0.68rem;
+	color: rgba(255, 255, 255, 0.48);
+	line-height: 1.45;
 }
 
 .pattern-grid {
@@ -948,7 +1076,7 @@ input:checked + .slider:before {
 	accent-color: var(--theme-accent);
 }
 
-#volume-val {
+#volume-val, #ambient-val {
 	font-family: var(--font-mono);
 	font-size: 0.75rem;
 }
@@ -1201,12 +1329,17 @@ input:checked + .slider:before {
 		font-size: 1.7rem;
 	}
 
+	.sanctuary-tab-btn {
+		padding: 0.45rem 0.75rem;
+		font-size: 0.64rem;
+	}
+
 	.pattern-grid {
 		grid-template-columns: 1fr;
 		gap: 0.7rem;
 	}
 
-	.yt-grid {
+	.journeys-grid, .yt-grid {
 		grid-template-columns: 1fr;
 		gap: 0.65rem;
 	}
@@ -1220,15 +1353,15 @@ input:checked + .slider:before {
 /* Mobile Smartphones (<= 480px) */
 @media screen and (max-width: 480px) {
 	html, body {
-		cursor: auto; /* Standard touch cursor on mobile devices */
+		cursor: auto;
 	}
 
-	.mode-pill, .tool-btn, .pattern-card, .yt-card, .timer-pill, #breath-btn, .modal-close, .primary-btn, .secondary-btn {
+	.mode-pill, .tool-btn, .pattern-card, .yt-card, .journey-card, .timer-pill, #breath-btn, .modal-close, .primary-btn, .secondary-btn, .sanctuary-tab-btn {
 		cursor: pointer;
 	}
 
 	#dot, #ring {
-		display: none !important; /* Hide custom desktop cursor dot/ring on mobile touch screens */
+		display: none !important;
 	}
 
 	#mode-switcher {
@@ -1367,30 +1500,41 @@ body[data-theme="classical"] .toggle-label {
 
 body[data-theme="classical"] .yt-card,
 body[data-theme="classical"] .pattern-card,
-body[data-theme="classical"] .radio-card {
+body[data-theme="classical"] .radio-card,
+body[data-theme="classical"] .journey-card {
 	background: rgba(255, 255, 255, 0.65) !important;
 	border: 1px solid rgba(165, 28, 48, 0.18) !important;
 }
 
 body[data-theme="classical"] .yt-card-title,
 body[data-theme="classical"] .pattern-card-title,
+body[data-theme="classical"] .journey-card-title,
 body[data-theme="classical"] .radio-content strong {
 	color: #2a1215 !important;
 }
 
 body[data-theme="classical"] .yt-card-subtitle,
 body[data-theme="classical"] .pattern-card-desc,
+body[data-theme="classical"] .journey-card-subtitle,
+body[data-theme="classical"] .journey-card-desc,
 body[data-theme="classical"] .radio-content p {
-	color: rgba(80, 24, 32, 0.65) !important;
+	color: rgba(80, 24, 32, 0.68) !important;
 }
 
-body[data-theme="classical"] .timer-pill {
+body[data-theme="classical"] .journey-card-badge {
+	background: rgba(165, 28, 48, 0.15) !important;
+	color: #a51c30 !important;
+}
+
+body[data-theme="classical"] .timer-pill,
+body[data-theme="classical"] .sanctuary-tab-btn {
 	background: rgba(255, 255, 255, 0.7) !important;
 	border: 1px solid rgba(165, 28, 48, 0.22) !important;
 	color: #501820 !important;
 }
 
-body[data-theme="classical"] .timer-pill.active {
+body[data-theme="classical"] .timer-pill.active,
+body[data-theme="classical"] .sanctuary-tab-btn.active {
 	background: #a51c30 !important;
 	border-color: #a51c30 !important;
 	color: #ffffff !important;
